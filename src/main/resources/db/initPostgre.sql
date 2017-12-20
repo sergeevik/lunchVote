@@ -43,7 +43,7 @@ CREATE TABLE lunch
   price         INTEGER                 NOT NULL,
   restaurant_id INTEGER                 NOT NULL,
   CONSTRAINT lunch_idx UNIQUE ( description, restaurant_id),
-  FOREIGN KEY (restaurant_id) REFERENCES restaurant(id)
+  FOREIGN KEY (restaurant_id) REFERENCES restaurant(id) ON DELETE CASCADE
 );
 
 
