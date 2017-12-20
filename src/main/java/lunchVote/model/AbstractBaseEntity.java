@@ -1,7 +1,7 @@
 package lunchVote.model;
 
 public abstract class AbstractBaseEntity {
-    private Integer id;
+    protected Integer id;
 
     public AbstractBaseEntity() {
     }
