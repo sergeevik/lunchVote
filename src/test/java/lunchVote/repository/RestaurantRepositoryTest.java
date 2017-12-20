@@ -1,0 +1,104 @@
+package lunchVote.repository;
+
+import lunchVote.model.Restaurant;
+import lunchVote.repository.inMemoryRepository.InMemoryRestaurantRepository;
+import lunchVote.repository.testData.RestaurantData;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.List;
+
+import static lunchVote.repository.testData.RestaurantData.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static lunchVote.CustomAssert.assertMatch;
+
+@ContextConfiguration(locations = "classpath:spring/spring-test-app.xml")
+@RunWith(SpringJUnit4ClassRunner.class)
+//@Sql(scripts = "classpath:db/populateDb.sql", config = @SqlConfig(encoding = "UTF-8"))
+public class RestaurantRepositoryTest {
+    @Autowired
+    RestaurantRepository repository;
+
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
+
+    @Before
+    public void setUp() throws Exception {
+        if (repository instanceof InMemoryRestaurantRepository)
+            InMemoryRestaurantRepository.initTestData();
+    }
+
+    @Test
+    public void updateNotExistRestaurant() throws Exception {
+        Restaurant restaurant = new Restaurant(4, "Mac", "Kontinent");
+        Restaurant save = repository.save(restaurant);
+        assertThat(save).isNull();
+    }
+
+    @Test
+    public void saveSetId() throws Exception {
+        Restaurant save = repository.save(new Restaurant());
+        assertThat(save.getId()).isNotNull();
+    }
+
+    @Test
+    public void save() throws Exception {
+        Restaurant restaurant = new Restaurant(null, "Sashlik", "Palatka");
+        Restaurant save = repository.save(restaurant);
+        assertThat(save.getId()).isNotNull();
+        List<Restaurant> all = repository.getAll();
+        assertMatch(all, RESTAURANT1, RESTAURANT2, RESTAURANT3, save);
+    }
+
+    @Test
+    public void getAll() throws Exception {
+        List<Restaurant> all = repository.getAll();
+        assertMatch(all, RestaurantData.getAllData());
+    }
+
+    @Test
+    public void update() throws Exception {
+        Restaurant restaurant = new Restaurant(RESTAURANT2);
+        restaurant.setName("Sushi");
+        Restaurant save = repository.save(restaurant);
+        assertThat(save).isNotNull();
+        List<Restaurant> all = repository.getAll();
+        assertMatch(all, restaurant, RESTAURANT1, RESTAURANT3);
+    }
+
+    @Test
+    public void getByIdNotReturnNull() throws Exception {
+        Restaurant byId = repository.getById(1);
+        assertThat(byId).isNotNull();
+    }
+
+    @Test
+    public void getByIdCorrectRestaurant() throws Exception {
+        Restaurant restaurant = new Restaurant(RESTAURANT1);
+        Restaurant byId = repository.getById(restaurant.getId());
+        assertThat(byId).isEqualToComparingFieldByField(RESTAURANT1);
+    }
+
+
+    @Test
+    public void deleteNotExistRestaurant() throws Exception {
+        boolean delete = repository.delete(50);
+        assertThat(delete).isFalse();
+        List<Restaurant> all = repository.getAll();
+        assertMatch(all, RestaurantData.getAllData());
+    }
+
+    @Test
+    public void deleteExistRestaurant() throws Exception {
+        boolean delete = repository.delete(1);
+        assertThat(delete).isTrue();
+        List<Restaurant> all = repository.getAll();
+        assertMatch(all, RESTAURANT2, RESTAURANT3);
+    }
+}
