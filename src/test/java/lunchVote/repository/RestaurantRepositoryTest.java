@@ -25,9 +25,6 @@ public class RestaurantRepositoryTest {
     @Autowired
     RestaurantRepository repository;
 
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
-
     @Test
     public void updateNotExistRestaurant() throws Exception {
         Restaurant restaurant = new Restaurant(4, "Mac", "Kontinent");
