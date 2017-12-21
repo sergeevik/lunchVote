@@ -126,4 +126,12 @@ public class LunchRepositoryTest {
 
         assertMatch(allForDate, BIG_MACK, CHIKEN, VOPER);
     }
+
+    @Test
+    public void getLunchWithRestaurant() throws Exception {
+        Lunch byId = repository.getById(VOPER.getId());
+        assertThat(byId).isNotNull();
+        assertThat(byId.getRestaurant()).isNotNull();
+        assertThat(byId.getRestaurant()).isEqualToComparingFieldByField(VOPER.getRestaurant());
+    }
 }
