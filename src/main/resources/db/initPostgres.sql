@@ -38,7 +38,7 @@ CREATE TABLE restaurant
 CREATE TABLE lunch
 (
   id            INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  date          TIMESTAMP DEFAULT now() NOT NULL,
+  date          DATE DEFAULT now()      NOT NULL,
   description   TEXT                    NOT NULL,
   price         INTEGER                 NOT NULL,
   restaurant_id INTEGER                 NOT NULL,
@@ -51,8 +51,8 @@ CREATE TABLE vote
 (
   id               INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
   user_id          INTEGER    NOT NULL,
-  lunch_id    INTEGER    NOT NULL,
-  date             TIMESTAMP DEFAULT now() NOT NULL,
+  lunch_id         INTEGER    NOT NULL,
+  date             DATE DEFAULT now() NOT NULL,
 
   CONSTRAINT vote_idx UNIQUE (user_id, lunch_id, date),
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
