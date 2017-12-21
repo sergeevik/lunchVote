@@ -6,11 +6,11 @@ import java.util.Arrays;
 
 public class RestaurantData {
 
-    public final static Restaurant RESTAURANT1 = new Restaurant(1, "Big King", "Kremel first door");
-    public final static Restaurant RESTAURANT2 = new Restaurant(2, "Кофе Хаус", "Дом с окном");
-    public final static Restaurant RESTAURANT3 = new Restaurant(3, "Taco", "In every house");
+    public final static Restaurant BURGER_KING = new Restaurant(100003, "Burger King", "Square");
+    public final static Restaurant MC_DONALD = new Restaurant(100004, "McDonald", "Square");
+    public final static Restaurant KFC = new Restaurant(100005, "KFC", "Raduga");
 
     public static Iterable<Restaurant> getAllData(){
-        return Arrays.asList(RESTAURANT1, RESTAURANT2, RESTAURANT3);
+        return Arrays.asList(BURGER_KING, MC_DONALD, KFC);
     }
 }
