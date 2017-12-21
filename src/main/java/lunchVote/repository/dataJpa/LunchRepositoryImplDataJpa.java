@@ -5,11 +5,13 @@ import lunchVote.repository.LunchRepository;
 import lunchVote.repository.dataJpa.springCrud.LunchCrud;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Repository
+@Transactional(readOnly = true)
 public class LunchRepositoryImplDataJpa implements LunchRepository {
 
     @Autowired
@@ -21,6 +23,7 @@ public class LunchRepositoryImplDataJpa implements LunchRepository {
     }
 
     @Override
+    @Transactional
     public Lunch save(Lunch object) {
         if (!object.isNew() && getById(object.getId()) == null)
             return null;
@@ -38,7 +41,8 @@ public class LunchRepositoryImplDataJpa implements LunchRepository {
     }
 
     @Override
+    @Transactional
     public boolean delete(int id) {
-        return false;
+        return crud.delete(id) != 0;
     }
 }
