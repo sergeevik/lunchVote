@@ -1,4 +1,4 @@
-package lunchVote.repository.testData;
+package lunchVote.testData;
 
 import lunchVote.model.Lunch;
 
@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
-import static lunchVote.repository.testData.RestaurantData.*;
+import static lunchVote.testData.RestaurantData.*;
 
 public class LunchData {
     public static final Lunch VOPER = new Lunch(1, LocalDate.now(), "Voper", 12000, BURGER_KING);

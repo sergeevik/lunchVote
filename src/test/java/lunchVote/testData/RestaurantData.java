@@ -1,4 +1,4 @@
-package lunchVote.repository.testData;
+package lunchVote.testData;
 
 import lunchVote.model.Restaurant;
 
