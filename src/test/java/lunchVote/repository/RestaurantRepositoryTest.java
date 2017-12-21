@@ -68,7 +68,7 @@ public class RestaurantRepositoryTest {
 
     @Test
     public void getByIdNotReturnNull() throws Exception {
-        Restaurant byId = repository.getById(1);
+        Restaurant byId = repository.getById(100003);
         assertThat(byId).isNotNull();
     }
 
@@ -90,7 +90,7 @@ public class RestaurantRepositoryTest {
 
     @Test
     public void deleteExistRestaurant() throws Exception {
-        boolean delete = repository.delete(1);
+        boolean delete = repository.delete(100003);
         assertThat(delete).isTrue();
         List<Restaurant> all = repository.getAll();
         assertMatch(all, MC_DONALD, KFC);
