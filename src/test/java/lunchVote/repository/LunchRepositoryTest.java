@@ -98,4 +98,16 @@ public class LunchRepositoryTest {
         List<Lunch> all = repository.getAll();
         assertMatch(all, VOPER, BIG_MACK, CHIKEN, nagets);
     }
+
+    @Test
+    public void deleteNotExistLunch() throws Exception {
+        boolean delete = repository.delete(12);
+        assertThat(delete).isFalse();
+    }
+
+    @Test
+    public void deleteExistLunch() throws Exception {
+        boolean delete = repository.delete(CHIKEN.getId());
+        assertThat(delete).isTrue();
+    }
 }
