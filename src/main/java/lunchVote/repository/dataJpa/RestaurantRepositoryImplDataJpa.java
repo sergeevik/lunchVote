@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
-public class RestaurantDataJpaRepositoryImpl implements RestaurantRepository {
+public class RestaurantRepositoryImplDataJpa implements RestaurantRepository {
 
     @Autowired
     private RestaurantCrud crud;
