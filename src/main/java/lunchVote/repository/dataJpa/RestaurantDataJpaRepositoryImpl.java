@@ -35,6 +35,6 @@ public class RestaurantDataJpaRepositoryImpl implements RestaurantRepository {
 
     @Override
     public boolean delete(int id) {
-        return false;
+        return crud.delete(id) != 0;
     }
 }
