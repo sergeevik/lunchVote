@@ -1,11 +1,27 @@
 package lunchVote.model;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "lunch")
 public class Lunch extends AbstractBaseEntity{
-    private LocalDate date;
+
+    @Column(name = "date")
+    private LocalDate date = LocalDate.now();
+
+    @Column(name = "description")
+    @NotBlank
     private String description;
+
+    @Column(name = "price")
+    @NotNull
     private Integer price;
+
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
     public Lunch(Integer id, LocalDate date, String description, Integer price, Restaurant restaurant) {
