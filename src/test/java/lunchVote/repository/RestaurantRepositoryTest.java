@@ -1,38 +1,32 @@
 package lunchVote.repository;
 
 import lunchVote.model.Restaurant;
-import lunchVote.repository.inMemoryRepository.InMemoryRestaurantRepository;
-import lunchVote.repository.testData.RestaurantData;
-import org.junit.Before;
+import lunchVote.testData.RestaurantData;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
-import static lunchVote.repository.testData.RestaurantData.*;
+import static lunchVote.testData.RestaurantData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static lunchVote.CustomAssert.assertMatch;
 
-@ContextConfiguration(locations = "classpath:spring/spring-test-app.xml")
+@ContextConfiguration(locations = {"classpath:spring/spring-app.xml", "classpath:spring/spring-db.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-//@Sql(scripts = "classpath:db/populateDb.sql", config = @SqlConfig(encoding = "UTF-8"))
+@Sql(scripts = "classpath:db/populateDb.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class RestaurantRepositoryTest {
     @Autowired
     RestaurantRepository repository;
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
-
-    @Before
-    public void setUp() throws Exception {
-        if (repository instanceof InMemoryRestaurantRepository)
-            InMemoryRestaurantRepository.initTestData();
-    }
 
     @Test
     public void updateNotExistRestaurant() throws Exception {
@@ -43,7 +37,7 @@ public class RestaurantRepositoryTest {
 
     @Test
     public void saveSetId() throws Exception {
-        Restaurant save = repository.save(new Restaurant());
+        Restaurant save = repository.save(new Restaurant(null, "KFC", "Park"));
         assertThat(save.getId()).isNotNull();
     }
 
