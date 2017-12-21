@@ -19,7 +19,7 @@ public class LunchRepositoryImplDataJpa implements LunchRepository {
 
     @Override
     public List<Lunch> getAllForDate(LocalDate date) {
-        return null;
+        return crud.getByDate(date);
     }
 
     @Override

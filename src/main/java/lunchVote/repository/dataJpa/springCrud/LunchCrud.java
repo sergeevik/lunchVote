@@ -6,9 +6,14 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
+import java.util.List;
+
 public interface LunchCrud extends JpaRepository<Lunch, Integer> {
 
     @Modifying
     @Query("DELETE FROM Lunch WHERE id=:id")
     int delete(@Param("id") int id);
+
+    List<Lunch> getByDate(LocalDate date);
 }
