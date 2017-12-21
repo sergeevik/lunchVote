@@ -53,7 +53,7 @@ public class RestaurantRepositoryTest {
         Restaurant save = repository.save(restaurant);
         assertThat(save.getId()).isNotNull();
         List<Restaurant> all = repository.getAll();
-        assertMatch(all, RESTAURANT1, RESTAURANT2, RESTAURANT3, save);
+        assertMatch(all, BURGER_KING, MC_DONALD, KFC, save);
     }
 
     @Test
@@ -64,12 +64,12 @@ public class RestaurantRepositoryTest {
 
     @Test
     public void update() throws Exception {
-        Restaurant restaurant = new Restaurant(RESTAURANT2);
+        Restaurant restaurant = new Restaurant(MC_DONALD);
         restaurant.setName("Sushi");
         Restaurant save = repository.save(restaurant);
         assertThat(save).isNotNull();
         List<Restaurant> all = repository.getAll();
-        assertMatch(all, restaurant, RESTAURANT1, RESTAURANT3);
+        assertMatch(all, restaurant, BURGER_KING, KFC);
     }
 
     @Test
@@ -80,9 +80,9 @@ public class RestaurantRepositoryTest {
 
     @Test
     public void getByIdCorrectRestaurant() throws Exception {
-        Restaurant restaurant = new Restaurant(RESTAURANT1);
+        Restaurant restaurant = new Restaurant(BURGER_KING);
         Restaurant byId = repository.getById(restaurant.getId());
-        assertThat(byId).isEqualToComparingFieldByField(RESTAURANT1);
+        assertThat(byId).isEqualToComparingFieldByField(BURGER_KING);
     }
 
 
@@ -99,6 +99,6 @@ public class RestaurantRepositoryTest {
         boolean delete = repository.delete(1);
         assertThat(delete).isTrue();
         List<Restaurant> all = repository.getAll();
-        assertMatch(all, RESTAURANT2, RESTAURANT3);
+        assertMatch(all, MC_DONALD, KFC);
     }
 }

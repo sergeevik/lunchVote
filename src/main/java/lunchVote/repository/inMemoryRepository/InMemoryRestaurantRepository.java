@@ -15,9 +15,9 @@ public class InMemoryRestaurantRepository implements RestaurantRepository {
 
     public static void initTestData() {
         repo.clear();
-        repo.put(1, RESTAURANT1);
-        repo.put(2, RESTAURANT2);
-        repo.put(3, RESTAURANT3);
+        repo.put(1, BURGER_KING);
+        repo.put(2, MC_DONALD);
+        repo.put(3, KFC);
         counter = new AtomicInteger(repo.size());
     }
 

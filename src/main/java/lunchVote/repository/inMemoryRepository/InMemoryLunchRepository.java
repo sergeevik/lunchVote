@@ -18,9 +18,9 @@ public class InMemoryLunchRepository implements LunchRepository {
 
     public static void initRepo() {
         repo.clear();
-        repo.put(1, LunchData.LUNCH1);
-        repo.put(2, LunchData.LUNCH2);
-        repo.put(3, LunchData.LUNCH3);
+        repo.put(1, LunchData.VOPER);
+        repo.put(2, LunchData.BIG_MACK);
+        repo.put(3, LunchData.CHIKEN);
         counter = new AtomicInteger(repo.size());
     }
 
