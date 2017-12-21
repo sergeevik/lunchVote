@@ -110,4 +110,20 @@ public class LunchRepositoryTest {
         boolean delete = repository.delete(CHIKEN.getId());
         assertThat(delete).isTrue();
     }
+
+    @Test
+    public void getByDayWhenLunchNotExist() throws Exception {
+        List<Lunch> allForDate = repository.getAllForDate(LocalDate.of(2017, 2, 19));
+        assertThat(allForDate).isNotNull()
+                              .isEmpty();
+    }
+
+    @Test
+    public void getByDayWhenLunchExist() throws Exception {
+        List<Lunch> allForDate = repository.getAllForDate(BIG_MACK.getDate());
+        assertThat(allForDate).isNotNull()
+                              .isNotEmpty();
+
+        assertMatch(allForDate, BIG_MACK, CHIKEN, VOPER);
+    }
 }
