@@ -1,8 +1,8 @@
 DROP TABLE IF EXISTS lunch;
+DROP TABLE IF EXISTS vote;
 DROP TABLE IF EXISTS restaurant;
 DROP TABLE IF EXISTS user_roles;
 DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS voite;
 DROP SEQUENCE IF EXISTS global_seq;
 
 CREATE SEQUENCE global_seq START 100000;
@@ -51,10 +51,10 @@ CREATE TABLE vote
 (
   id               INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
   user_id          INTEGER    NOT NULL,
-  restaurant_id    INTEGER    NOT NULL,
+  lunch_id    INTEGER    NOT NULL,
   date             TIMESTAMP DEFAULT now() NOT NULL,
 
-  CONSTRAINT vote_idx UNIQUE (user_id, restaurant_id, date),
+  CONSTRAINT vote_idx UNIQUE (user_id, lunch_id, date),
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-  FOREIGN KEY (restaurant_id) REFERENCES restaurant(id) ON DELETE CASCADE
+  FOREIGN KEY (lunch_id) REFERENCES lunch(id) ON DELETE CASCADE
 );

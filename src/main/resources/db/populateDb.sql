@@ -18,16 +18,16 @@ INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_ADMIN', 100002);
 
 INSERT INTO restaurant (name, address) VALUES
-  ('Burger King', 'Square'), --100003
-  ('McDonald', 'Square'), --100004
-  ('KFC', 'Raduga'); --100005
+  ('Burger King', 'Square'),   --100003
+  ('McDonald', 'Square'),      --100004
+  ('KFC', 'Raduga');           --100005
 
 INSERT INTO lunch (description, price, restaurant_id) VALUES
-  ('Voper', 12000, 100003),
-  ('Big mack', 8000, 100004),
-  ('Chiken', 10000, 100005);
+  ('Voper', 12000, 100003),   --100006
+  ('Big mack', 8000, 100004), --100007
+  ('Chiken', 10000, 100005);  --100008
 
-INSERT INTO vote (user_id, restaurant_id) VALUES
-  (100000, 100003),
-  (100001, 100003),
-  (100002, 100005);
+INSERT INTO vote (user_id, lunch_id) VALUES
+  (100000, 100006),
+  (100001, 100006),
+  (100002, 100008);
