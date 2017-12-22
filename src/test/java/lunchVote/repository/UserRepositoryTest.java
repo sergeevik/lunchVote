@@ -1,10 +1,15 @@
 package lunchVote.repository;
 
+import lunchVote.CustomAssert;
 import lunchVote.model.User;
+import lunchVote.testData.UserData;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static lunchVote.testData.UserData.JURA;
+import java.util.List;
+
+import static lunchVote.CustomAssert.assertMatch;
+import static lunchVote.testData.UserData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -25,5 +30,18 @@ public class UserRepositoryTest extends SpringConfigOnTests {
         User byId = repository.getById(JURA.getId());
         assertThat(byId).isNotNull()
                 .isEqualToIgnoringGivenFields(JURA, "registered");
+    }
+
+    @Test
+    public void getAllReturnNotNull() throws Exception {
+        List<User> all = repository.getAll();
+        assertThat(all).isNotNull();
+    }
+
+    @Test
+    public void getAll() throws Exception {
+        List<User> all = repository.getAll();
+        assertThat(all).usingElementComparatorIgnoringFields("registered")
+                .containsExactlyInAnyOrder(ADMIN, USER, JURA);
     }
 }

@@ -6,6 +6,7 @@ import lunchVote.repository.dataJpa.springCrud.UserCrud;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -31,7 +32,7 @@ public class UserRepositoryImplDataJpa implements UserRepository {
 
     @Override
     public List<User> getAll() {
-        return null;
+        return crud.getAllWithRoles();
     }
 
     @Override
