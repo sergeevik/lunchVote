@@ -1,18 +1,8 @@
 package lunchVote.repository;
 
-import lunchVote.CustomAssert;
-import lunchVote.DbProfileResolver;
 import lunchVote.model.Lunch;
-import lunchVote.testData.LunchData;
-import lunchVote.testData.RestaurantData;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -22,11 +12,8 @@ import static lunchVote.testData.LunchData.*;
 import static lunchVote.testData.RestaurantData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ContextConfiguration(locations = {"classpath:spring/spring-app.xml", "classpath:spring/spring-db.xml"})
-@RunWith(SpringJUnit4ClassRunner.class)
-@Sql(scripts = "classpath:db/populateDb.sql", config = @SqlConfig(encoding = "UTF-8"))
-@ActiveProfiles(resolver = DbProfileResolver.class)
-public class LunchRepositoryTest {
+
+public class LunchRepositoryTest extends SpringConfigOnTests{
 
     @Autowired
     LunchRepository repository;
