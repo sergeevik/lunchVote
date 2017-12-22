@@ -57,4 +57,16 @@ public class UserRepositoryTest extends SpringConfigOnTests {
         assertThat(admin).isNotNull()
                 .isEqualToIgnoringGivenFields(ADMIN, "registered");
     }
+
+    @Test
+    public void deleteNotExist() throws Exception {
+        boolean delete = repository.delete(42);
+        assertThat(delete).isFalse();
+    }
+
+    @Test
+    public void deleteExist() throws Exception {
+        boolean delete = repository.delete(JURA.getId());
+        assertThat(delete).isTrue();
+    }
 }
