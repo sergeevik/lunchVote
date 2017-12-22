@@ -44,4 +44,17 @@ public class UserRepositoryTest extends SpringConfigOnTests {
         assertThat(all).usingElementComparatorIgnoringFields("registered")
                 .containsExactlyInAnyOrder(ADMIN, USER, JURA);
     }
+
+    @Test
+    public void getByEmailNotExist() throws Exception {
+        User fake = repository.getByEmail("fake@email.com");
+        assertThat(fake).isNull();
+    }
+
+    @Test
+    public void getByEmailExist() throws Exception {
+        User admin = repository.getByEmail(ADMIN.getEmail());
+        assertThat(admin).isNotNull()
+                .isEqualToIgnoringGivenFields(ADMIN, "registered");
+    }
 }
