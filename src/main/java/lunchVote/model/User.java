@@ -1,5 +1,6 @@
 package lunchVote.model;
 
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -36,6 +37,7 @@ public class User extends AbstractBaseEntity{
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
+    @BatchSize(size = 200)
     private Set<Role> roles;
 
     public User() {
