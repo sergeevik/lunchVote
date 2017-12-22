@@ -1,14 +1,12 @@
 package lunchVote.repository;
 
-import lunchVote.CustomAssert;
+import lunchVote.model.Role;
 import lunchVote.model.User;
-import lunchVote.testData.UserData;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-import static lunchVote.CustomAssert.assertMatch;
 import static lunchVote.testData.UserData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -68,5 +66,49 @@ public class UserRepositoryTest extends SpringConfigOnTests {
     public void deleteExist() throws Exception {
         boolean delete = repository.delete(JURA.getId());
         assertThat(delete).isTrue();
+    }
+
+    @Test
+    public void saveNewUserNotReturnNull() throws Exception {
+        User save = repository.save(new User(null, "Ola", "ola@mail.ru", "petty123", Role.ROLE_USER));
+        assertThat(save).isNotNull();
+    }
+
+    @Test
+    public void saveSetIdOnNewUser() throws Exception {
+        User save = repository.save(new User(null, "Ola", "ola@mail.ru", "petty123", Role.ROLE_USER));
+        assertThat(save.getId()).isNotNull();
+    }
+
+    @Test
+    public void saveNewUserInDb() throws Exception {
+        User user = new User(null, "Ola", "ola@mail.ru", "petty123", Role.ROLE_USER);
+        repository.save(user);
+        List<User> all = repository.getAll();
+        assertThat(all).usingElementComparatorIgnoringFields("registered")
+                .containsExactlyInAnyOrder(ADMIN, USER, JURA, user);
+    }
+
+    @Test
+    public void updateInDb() throws Exception {
+        User user = new User(ADMIN);
+        user.setName("Pavel");
+        User save = repository.save(user);
+        List<User> all = repository.getAll();
+
+        assertThat(all).usingElementComparatorIgnoringFields("registered")
+                .containsExactlyInAnyOrder(USER, JURA, user);
+    }
+
+    @Test
+    public void updateNotExistReturnNull() throws Exception {
+        User user = new User(7, "Ola", "ola@mail.ru", "petty123", Role.ROLE_USER);
+        User save = repository.save(user);
+        assertThat(save).isNull();
+
+        List<User> all = repository.getAll();
+        assertThat(all).usingElementComparatorIgnoringFields("registered")
+                .containsExactlyInAnyOrder(ADMIN, USER, JURA)
+                .doesNotContain(user);
     }
 }

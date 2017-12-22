@@ -22,8 +22,11 @@ public class UserRepositoryImplDataJpa implements UserRepository {
     }
 
     @Override
+    @Transactional
     public User save(User object) {
-        return null;
+        if(!object.isNew() && getById(object.getId()) == null)
+            return null;
+        return crud.save(object);
     }
 
     @Override
