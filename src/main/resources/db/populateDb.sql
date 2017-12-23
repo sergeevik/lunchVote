@@ -29,5 +29,4 @@ INSERT INTO lunch (description, price, restaurant_id) VALUES
 
 INSERT INTO vote (user_id, lunch_id) VALUES
   (100000, 100006),
-  (100001, 100006),
-  (100002, 100008);
+  (100001, 100006);
