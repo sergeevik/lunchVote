@@ -15,7 +15,8 @@ public interface LunchCrud extends JpaRepository<Lunch, Integer> {
     @Query("DELETE FROM Lunch WHERE id=:id")
     int delete(@Param("id") int id);
 
-    List<Lunch> getByDate(LocalDate date);
+    @Query("SELECT lunch FROM Lunch lunch LEFT JOIN FETCH lunch.restaurant WHERE lunch.date=:date")
+    List<Lunch> getByDate(@Param("date") LocalDate date);
 
     @Override
     @Query("SELECT lunch FROM Lunch lunch LEFT JOIN FETCH lunch.restaurant")
