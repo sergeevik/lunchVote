@@ -20,7 +20,7 @@
                 <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SQL_COMMENTS}"
                        value="true"/>
                 <entry key="#{T(org.hibernate.cfg.AvailableSettings).INTERCEPTOR}"
-                       value="lunchVote.HibernateCountQuery"/>
+                       value="lunchVote.repository.queryCounter.CountInterceptor"/>
             </map>
         </property>
 
@@ -33,5 +33,5 @@
     </bean>
 
     <bean id="interceptor"
-          class="lunchVote.HibernateCountQuery" depends-on="entityManagerFactory"/>
+          class="lunchVote.repository.queryCounter.CountInterceptor" depends-on="entityManagerFactory"/>
 </beans>
