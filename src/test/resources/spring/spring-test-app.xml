@@ -1,8 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="lunchVote.**.repository"/>
+
+    <import resource="spring-db.xml"/>
+    <import resource="spring-app.xml"/>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+          p:dataSource-ref="dataSource"
+          p:packagesToScan="lunchVote.**.model">
+        <!--p:persistenceUnitName="persistenceUnit">-->
+
+        <property name="jpaPropertyMap">
+            <map>
+                <entry key="#{T(org.hibernate.cfg.AvailableSettings).FORMAT_SQL}" value="true"/>
+                <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SQL_COMMENTS}"
+                       value="true"/>
+                <entry key="#{T(org.hibernate.cfg.AvailableSettings).INTERCEPTOR}"
+                       value="lunchVote.HibernateCountQuery"/>
+            </map>
+        </property>
+
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+                  p:showSql="false">
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="interceptor"
+          class="lunchVote.HibernateCountQuery" depends-on="entityManagerFactory"/>
 </beans>
