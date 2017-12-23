@@ -7,11 +7,11 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "vote")
 public class Vote extends AbstractBaseEntity{
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lunch_id")
     private Lunch lunch;
 
