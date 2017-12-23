@@ -1,4 +1,5 @@
-<configuration>
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
 
     <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
         <resetJUL>true</resetJUL>
@@ -7,7 +8,7 @@
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <charset>UTF-8</charset>
-            <pattern>%d{HH:mm:ss.SSS} %highlight(%-5level) %cyan(%class{50}.%M:%L) - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} %red(%-5level) %cyan(%class{50}.%M:%L) - %msg%n</pattern>
         </encoder>
     </appender>
 
@@ -22,7 +23,7 @@
     </logger>
 
     <!--<logger name="org.postgresql" level="debug"/>-->
-    <!--<logger name="org.springframework.jdbc" level="debug"/>-->
+    <logger name="org.springframework.jdbc" level="warn"/>
 
     <logger name="lunchVote.repository" level="debug"/>
 
