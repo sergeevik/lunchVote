@@ -1,13 +1,13 @@
 package lunchVote.repository;
 
-import lunchVote.model.Lunch;
 import lunchVote.model.Vote;
+import lunchVote.transferObjects.VoteCounter;
 
 import java.time.LocalDate;
-import java.util.Map;
+import java.util.List;
 
 public interface VoteRepository {
     Vote getByUserIdAndDate(int userId, LocalDate date);
     Vote save(int lunchId, int userId);
-    Map<Lunch, Integer> getLunchVotesOnDate(LocalDate date);
+    List<VoteCounter> getLunchVotesOnDate(LocalDate date);
 }
