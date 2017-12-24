@@ -58,12 +58,6 @@ public class LunchRepositoryTest extends SpringConfigOnTests{
     }
 
     @Test
-    public void updateNotExistLunch() throws Exception {
-        Lunch save = repository.save(new Lunch(10, LocalDate.now(), "Zinger", 4500, KFC));
-        assertThat(save).isNull();
-    }
-
-    @Test
     public void updateExistLunchNotReturnNull() throws Exception {
         Lunch lunch = new Lunch(VOPER);
         lunch.setPrice(200000);
@@ -141,7 +135,7 @@ public class LunchRepositoryTest extends SpringConfigOnTests{
 
     @Test
     public void updateQueryCount() throws Exception {
-        countQueries.setLimit(2);
+        countQueries.setLimit(3);
         Lunch lunch = new Lunch(CHIKEN);
         lunch.setPrice(22000);
         repository.save(lunch);
