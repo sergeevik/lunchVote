@@ -1,11 +1,13 @@
 package lunchVote.model;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -14,15 +16,18 @@ import java.time.LocalDate;
 public class Lunch extends AbstractBaseEntity{
 
     @Column(name = "date")
+    @NotNull
     private LocalDate date = LocalDate.now();
 
     @Column(name = "description")
     @NotBlank
+    @Size(max = 255)
     private String description;
 
     @Column(name = "price")
     @NotNull
-    private Integer price;
+    @Range(min = 100)
+    private int price;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")

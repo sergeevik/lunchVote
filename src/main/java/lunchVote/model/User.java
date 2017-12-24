@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.EnumSet;
@@ -23,7 +24,7 @@ public class User extends AbstractBaseEntity{
 
     @Column(name = "email")
     @Email
-    @NotNull
+    @NotBlank
     private String email;
 
     @Column(name = "password")
@@ -31,6 +32,7 @@ public class User extends AbstractBaseEntity{
     private String password;
 
     @Column(name = "registered")
+    @NotNull
     private LocalDateTime registered = LocalDateTime.now();
 
     @Column(name = "enabled")

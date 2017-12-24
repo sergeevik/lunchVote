@@ -6,21 +6,21 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "restaurant")
 public class Restaurant extends AbstractBaseEntity {
     @Column(name = "name")
-    @NotEmpty
-    @NotNull
+    @NotBlank
+    @Size(max = 255)
     private String name;
 
     @Column(name = "address")
-    @NotEmpty
-    @NotNull
+    @NotBlank
+    @Size(max = 255)
     private String address;
 
     public Restaurant(Integer id, String name, String address) {
