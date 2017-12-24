@@ -21,4 +21,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @Sql(scripts = "classpath:db/populateDb.sql", config = @SqlConfig(encoding = "UTF-8"))
 @ActiveProfiles(resolver = DbProfileResolver.class)
 public abstract class SpringConfigOnTests {
+    @Rule
+    public CountInterceptor countQueries = new CountInterceptor();
 }
