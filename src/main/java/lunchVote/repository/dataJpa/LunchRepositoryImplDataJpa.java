@@ -1,8 +1,10 @@
 package lunchVote.repository.dataJpa;
 
 import lunchVote.model.Lunch;
+import lunchVote.model.Restaurant;
 import lunchVote.repository.LunchRepository;
 import lunchVote.repository.dataJpa.springCrud.LunchCrud;
+import lunchVote.repository.dataJpa.springCrud.RestaurantCrud;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,16 @@ public class LunchRepositoryImplDataJpa implements LunchRepository {
     @Autowired
     LunchCrud crud;
 
+    @Autowired
+    RestaurantCrud restaurantCrud;
+
+    @Override
+    public Lunch save(Lunch object, int restaurantId) {
+        Restaurant one = restaurantCrud.getOne(restaurantId);
+        object.setRestaurant(one);
+        return crud.save(object);
+    }
+
     @Override
     public List<Lunch> getAllForDate(LocalDate date) {
         return crud.getByDate(date);
@@ -25,8 +37,6 @@ public class LunchRepositoryImplDataJpa implements LunchRepository {
     @Override
     @Transactional
     public Lunch save(Lunch object) {
-        if (!object.isNew() && getById(object.getId()) == null)
-            return null;
         return crud.save(object);
     }
 
