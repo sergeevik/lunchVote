@@ -84,5 +84,30 @@ public class VoteRepositoryTest extends SpringConfigOnTests{
         assertThat(lunchVotesOnDate).hasSize(2);
     }
 
+        /*
+    ===========================
+    =  Test to count queries  =
+    ===========================
+     */
 
+
+    @Test
+    public void getByUserIdAndDateQueryCount() throws Exception {
+        countQueries.setLimit(1);
+        repository.getByUserIdAndDate(JURA.getId(), LocalDate.now());
+    }
+
+    @Test
+    public void saveQueryCount() throws Exception {
+        countQueries.setLimit(2);
+        int lunchId = USER_VOTE.getLunch().getId();
+        int userId = USER_VOTE.getUser().getId();
+        repository.save(lunchId, userId);
+    }
+
+    @Test
+    public void getLunchVotesOnDateQueryCount() throws Exception {
+        countQueries.setLimit(1);
+        repository.getLunchVotesOnDate(LocalDate.now());
+    }
 }

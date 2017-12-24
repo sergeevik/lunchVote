@@ -1,6 +1,8 @@
 package lunchVote.repository;
 
 import lunchVote.model.Lunch;
+import lunchVote.repository.queryCounter.CountInterceptor;
+import org.junit.Rule;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -123,5 +125,49 @@ public class LunchRepositoryTest extends SpringConfigOnTests{
         assertThat(byId).isNotNull();
         assertThat(byId.getRestaurant()).isNotNull();
         assertThat(byId.getRestaurant()).isEqualToComparingFieldByField(VOPER.getRestaurant());
+    }
+
+    /*
+    ===========================
+    =  Test to count queries  =
+    ===========================
+     */
+
+    @Test
+    public void saveQueryCount() throws Exception {
+        countQueries.setLimit(2);
+        repository.save(new Lunch(null, LocalDate.now(), "Nagets", 9000, MC_DONALD));
+    }
+
+    @Test
+    public void updateQueryCount() throws Exception {
+        countQueries.setLimit(2);
+        Lunch lunch = new Lunch(CHIKEN);
+        lunch.setPrice(22000);
+        repository.save(lunch);
+    }
+
+    @Test
+    public void getAllForDateQueryCount() throws Exception {
+        countQueries.setLimit(1);
+        repository.getAllForDate(LocalDate.now());
+    }
+
+    @Test
+    public void getByIdQueryCount() throws Exception {
+        countQueries.setLimit(1);
+        repository.getById(BIG_MACK.getId());
+    }
+
+    @Test
+    public void getAllQueryCount() throws Exception {
+        countQueries.setLimit(1);
+        repository.getAll();
+    }
+
+    @Test
+    public void deleteQueryCount() throws Exception {
+        countQueries.setLimit(1);
+        repository.delete(VOPER.getId());
     }
 }

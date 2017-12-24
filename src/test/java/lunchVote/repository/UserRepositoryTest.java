@@ -111,4 +111,51 @@ public class UserRepositoryTest extends SpringConfigOnTests {
                 .containsExactlyInAnyOrder(ADMIN, USER, JURA)
                 .doesNotContain(user);
     }
+
+
+
+    /*
+    ===========================
+    =  Test to count queries  =
+    ===========================
+     */
+
+
+    @Test
+    public void saveQueryCount() throws Exception {
+        countQueries.setLimit(3);
+        repository.save(new User(null, "Ola", "ola@mail.ru", "petty123", Role.ROLE_USER));
+    }
+
+    @Test
+    public void updateQueryCount() throws Exception {
+        countQueries.setLimit(2);
+        User user = new User(ADMIN);
+        user.setName("Pavel");
+        repository.save(user);
+    }
+
+    @Test
+    public void getByEmailQueryCount() throws Exception {
+        countQueries.setLimit(1);
+        repository.getByEmail(ADMIN.getEmail());
+    }
+
+    @Test
+    public void getByIdQueryCount() throws Exception {
+        countQueries.setLimit(1);
+        repository.getById(JURA.getId());
+    }
+
+    @Test
+    public void getAllQueryCount() throws Exception {
+        countQueries.setLimit(2);
+        repository.getAll();
+    }
+
+    @Test
+    public void deleteQueryCount() throws Exception {
+        countQueries.setLimit(1);
+        repository.delete(USER.getId());
+    }
 }

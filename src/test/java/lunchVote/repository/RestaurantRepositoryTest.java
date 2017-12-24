@@ -56,7 +56,7 @@ public class RestaurantRepositoryTest extends SpringConfigOnTests {
 
     @Test
     public void getByIdNotReturnNull() throws Exception {
-        Restaurant byId = repository.getById(100003);
+        Restaurant byId = repository.getById(BURGER_KING.getId());
         assertThat(byId).isNotNull();
     }
 
@@ -78,9 +78,50 @@ public class RestaurantRepositoryTest extends SpringConfigOnTests {
 
     @Test
     public void deleteExistRestaurant() throws Exception {
-        boolean delete = repository.delete(100003);
+        boolean delete = repository.delete(BURGER_KING.getId());
         assertThat(delete).isTrue();
         List<Restaurant> all = repository.getAll();
         assertMatch(all, MC_DONALD, KFC);
+    }
+
+    /*
+    ===========================
+    =  Test to count queries  =
+    ===========================
+     */
+
+
+    @Test
+    public void saveQueryCount() throws Exception {
+        countQueries.setLimit(2);
+        Restaurant restaurant = new Restaurant(null, "Sashlik", "Palatka");
+        repository.save(restaurant);
+    }
+
+    @Test
+    public void updateQueryCount() throws Exception {
+        countQueries.setLimit(2);
+        Restaurant restaurant = new Restaurant(MC_DONALD);
+        restaurant.setName("Sushi");
+        repository.save(restaurant);
+    }
+
+    @Test
+    public void getByIdQueryCount() throws Exception {
+        countQueries.setLimit(1);
+        Restaurant restaurant = new Restaurant(BURGER_KING);
+        repository.getById(restaurant.getId());
+    }
+
+    @Test
+    public void getAllQueryCount() throws Exception {
+        countQueries.setLimit(1);
+        repository.getAll();
+    }
+
+    @Test
+    public void deleteQueryCount() throws Exception {
+        countQueries.setLimit(1);
+        repository.delete(BURGER_KING.getId());
     }
 }
