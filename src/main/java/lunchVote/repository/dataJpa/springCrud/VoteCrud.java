@@ -11,10 +11,12 @@ import java.util.List;
 
 public interface VoteCrud extends JpaRepository<Vote, Integer>{
 
-    @Query("SELECT DISTINCT vote FROM Vote vote WHERE vote.user.id=:userId And vote.date=:date")
+    @Query("SELECT DISTINCT vote FROM Vote vote WHERE vote.userId=:userId And vote.date=:date")
     Vote findByUserAndDate(@Param("userId") int userId, @Param("date") LocalDate date);
 
-    @Query("select new lunchVote.transferObjects.VoteCounter(vote.lunch, count(vote)) FROM Vote vote where vote.date=:date GROUP BY vote.lunch")
+    @Query("select new lunchVote.transferObjects.VoteCounter(lunch, count(vote))" +
+            " FROM Vote vote LEFT JOIN FETCH Lunch lunch ON vote.lunchId=lunch.id" +
+            " where vote.date=:date GROUP BY lunch")
     List<VoteCounter> getLunchVoteOnDate(@Param("date") LocalDate date);
 
 

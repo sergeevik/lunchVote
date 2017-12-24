@@ -35,7 +35,7 @@ public class VoteRepositoryTest extends SpringConfigOnTests{
     public void getByUserIdAndDate() throws Exception {
         Vote byUserIdAndDate = repository.getByUserIdAndDate(JURA.getId(), LocalDate.now());
         assertThat(byUserIdAndDate).isNotNull()
-                .isEqualToIgnoringGivenFields(JURA_VOTE, "user", "lunch");
+                .isEqualToComparingFieldByField(JURA_VOTE);
     }
 
     @Test
@@ -52,14 +52,12 @@ public class VoteRepositoryTest extends SpringConfigOnTests{
 
     @Test
     public void saveNormal() throws Exception {
-        int lunchId = USER_VOTE.getLunch().getId();
-        int userId = USER_VOTE.getUser().getId();
-        Vote save = repository.save(lunchId, userId);
+        Vote save = repository.save(USER_VOTE.getLunchId(), USER_VOTE.getUserId());
 
         assertThat(save).isNotNull();
 
-        Vote byUserIdAndDate = repository.getByUserIdAndDate(userId, save.getDate());
-        assertThat(byUserIdAndDate).isEqualToIgnoringGivenFields(USER_VOTE, "user", "lunch");
+        Vote byUserIdAndDate = repository.getByUserIdAndDate(USER_VOTE.getUserId(), save.getDate());
+        assertThat(byUserIdAndDate).isEqualToComparingFieldByField(USER_VOTE);
     }
 
     @Test
@@ -76,9 +74,7 @@ public class VoteRepositoryTest extends SpringConfigOnTests{
 
     @Test
     public void getLunchVotesAfterVote() throws Exception {
-        int lunchId = USER_VOTE.getLunch().getId();
-        int userId = USER_VOTE.getUser().getId();
-        repository.save(lunchId, userId);
+        repository.save(USER_VOTE.getLunchId(), USER_VOTE.getUserId());
 
         List<VoteCounter> lunchVotesOnDate = repository.getLunchVotesOnDate(LocalDate.now());
         assertThat(lunchVotesOnDate).hasSize(2);
@@ -100,14 +96,12 @@ public class VoteRepositoryTest extends SpringConfigOnTests{
     @Test
     public void saveQueryCount() throws Exception {
         countQueries.setLimit(2);
-        int lunchId = USER_VOTE.getLunch().getId();
-        int userId = USER_VOTE.getUser().getId();
-        repository.save(lunchId, userId);
+        repository.save(USER_VOTE.getLunchId(), USER_VOTE.getUserId());
     }
 
     @Test
     public void getLunchVotesOnDateQueryCount() throws Exception {
-        countQueries.setLimit(1);
+        countQueries.setLimit(2);
         repository.getLunchVotesOnDate(LocalDate.now());
     }
 }

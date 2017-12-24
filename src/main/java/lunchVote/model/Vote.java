@@ -7,13 +7,11 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "vote")
 public class Vote extends AbstractBaseEntity{
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "user_id")
+    private int userId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lunch_id")
-    private Lunch lunch;
+    @Column(name = "lunch_id")
+    private int lunchId;
 
     @Column(name = "date")
     @NotNull
@@ -23,30 +21,30 @@ public class Vote extends AbstractBaseEntity{
     }
 
     public Vote(Vote vote) {
-        this(vote.id, vote.user, vote.lunch, vote.date);
+        this(vote.id, vote.userId, vote.lunchId, vote.date);
     }
 
-    public Vote(Integer id, User user, Lunch lunch, @NotNull LocalDate date) {
+    public Vote(Integer id, int userId, int lunch, @NotNull LocalDate date) {
         super(id);
-        this.user = user;
-        this.lunch = lunch;
+        this.userId = userId;
+        this.lunchId = lunch;
         this.date = date;
     }
 
-    public User getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public Lunch getLunch() {
-        return lunch;
+    public int getLunchId() {
+        return lunchId;
     }
 
-    public void setLunch(Lunch lunch) {
-        this.lunch = lunch;
+    public void setLunchId(int lunchId) {
+        this.lunchId = lunchId;
     }
 
     public LocalDate getDate() {
