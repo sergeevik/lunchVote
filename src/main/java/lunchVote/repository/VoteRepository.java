@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface VoteRepository {
     Vote getByUserIdAndDate(int userId, LocalDate date);
-    Vote save(int lunchId, int userId);
+    Vote save(int lunchId, int userId, LocalDate date);
     List<VoteCounter> getLunchVotesOnDate(LocalDate date);
 }

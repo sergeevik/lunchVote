@@ -24,8 +24,14 @@ public class VoteRepositoryImplDataJpa implements VoteRepository {
 
     @Override
     @Transactional
-    public Vote save(int lunchId, int userId) {
-        return crud.save(new Vote(null, userId, lunchId, LocalDate.now()));
+    public Vote save(int lunchId, int userId, LocalDate date) {
+        Vote byUserAndDate = crud.findByUserAndDate(userId, date);
+        if (byUserAndDate == null) {
+            return crud.save(new Vote(null, userId, lunchId, date));
+        }else{
+            byUserAndDate.setLunchId(lunchId);
+            return crud.save(byUserAndDate);
+        }
     }
 
     @Override
