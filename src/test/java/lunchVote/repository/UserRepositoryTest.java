@@ -2,10 +2,12 @@ package lunchVote.repository;
 
 import lunchVote.model.Role;
 import lunchVote.model.User;
+import lunchVote.repository.dataJpa.springCrud.UserCrud;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
 
 import static lunchVote.testData.UserData.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,31 +16,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UserRepositoryTest extends SpringConfigOnTests {
 
     @Autowired
-    private UserRepository repository;
+    private UserCrud repository;
 
 
     @Test
     public void getNotExistUser() throws Exception {
-        User byId = repository.getById(12);
-        assertThat(byId).isNull();
+        Optional<User> byId = repository.findById(12);
+        assertThat(byId).isEmpty();
     }
 
     @Test
     public void getExistUser() throws Exception {
-        User byId = repository.getById(JURA.getId());
-        assertThat(byId).isNotNull()
-                .isEqualToIgnoringGivenFields(JURA, "registered");
+        Optional<User> byId = repository.findById(JURA.getId());
+        assertThat(byId).isNotEmpty();
+
+        assertThat(byId.get()).isEqualToIgnoringGivenFields(JURA, "registered");
     }
 
     @Test
     public void getAllReturnNotNull() throws Exception {
-        List<User> all = repository.getAll();
+        List<User> all = repository.findAll();
         assertThat(all).isNotNull();
     }
 
     @Test
     public void getAll() throws Exception {
-        List<User> all = repository.getAll();
+        List<User> all = repository.findAll();
         assertThat(all).usingElementComparatorIgnoringFields("registered")
                 .containsExactlyInAnyOrder(ADMIN, USER, JURA);
     }
@@ -58,14 +61,14 @@ public class UserRepositoryTest extends SpringConfigOnTests {
 
     @Test
     public void deleteNotExist() throws Exception {
-        boolean delete = repository.delete(42);
-        assertThat(delete).isFalse();
+        int delete = repository.delete(42);
+        assertThat(delete).isEqualTo(0);
     }
 
     @Test
     public void deleteExist() throws Exception {
-        boolean delete = repository.delete(JURA.getId());
-        assertThat(delete).isTrue();
+        int delete = repository.delete(JURA.getId());
+        assertThat(delete).isNotEqualTo(0);
     }
 
     @Test
@@ -84,7 +87,7 @@ public class UserRepositoryTest extends SpringConfigOnTests {
     public void saveNewUserInDb() throws Exception {
         User user = new User(null, "Ola", "ola@mail.ru", "petty123", Role.ROLE_USER);
         repository.save(user);
-        List<User> all = repository.getAll();
+        List<User> all = repository.findAll();
         assertThat(all).usingElementComparatorIgnoringFields("registered")
                 .containsExactlyInAnyOrder(ADMIN, USER, JURA, user);
     }
@@ -93,25 +96,12 @@ public class UserRepositoryTest extends SpringConfigOnTests {
     public void updateInDb() throws Exception {
         User user = new User(ADMIN);
         user.setName("Pavel");
-        User save = repository.save(user);
-        List<User> all = repository.getAll();
+        repository.save(user);
+        List<User> all = repository.findAll();
 
         assertThat(all).usingElementComparatorIgnoringFields("registered")
                 .containsExactlyInAnyOrder(USER, JURA, user);
     }
-
-    @Test
-    public void updateNotExistReturnNull() throws Exception {
-        User user = new User(7, "Ola", "ola@mail.ru", "petty123", Role.ROLE_USER);
-        User save = repository.save(user);
-        assertThat(save).isNull();
-
-        List<User> all = repository.getAll();
-        assertThat(all).usingElementComparatorIgnoringFields("registered")
-                .containsExactlyInAnyOrder(ADMIN, USER, JURA)
-                .doesNotContain(user);
-    }
-
 
 
     /*
@@ -144,13 +134,13 @@ public class UserRepositoryTest extends SpringConfigOnTests {
     @Test
     public void getByIdQueryCount() throws Exception {
         countQueries.setLimit(1);
-        repository.getById(JURA.getId());
+        repository.findById(JURA.getId());
     }
 
     @Test
     public void getAllQueryCount() throws Exception {
         countQueries.setLimit(2);
-        repository.getAll();
+        repository.findAll();
     }
 
     @Test

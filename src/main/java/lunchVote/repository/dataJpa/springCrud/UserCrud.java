@@ -5,8 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface UserCrud extends JpaRepository<User, Integer>{
 
@@ -14,6 +13,7 @@ public interface UserCrud extends JpaRepository<User, Integer>{
     User getByEmail(@Param("email")String email);
 
     @Modifying
+    @Transactional
     @Query("DELETE FROM User WHERE id=:id")
     int delete(@Param("id") int id);
 }

@@ -1,6 +1,7 @@
 package lunchVote.repository;
 
 import lunchVote.model.Restaurant;
+import lunchVote.repository.dataJpa.springCrud.RestaurantCrud;
 import lunchVote.testData.RestaurantData;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class RestaurantRepositoryTest extends SpringConfigOnTests {
     @Autowired
-    RestaurantRepository repository;
-
-    @Test
-    public void updateNotExistRestaurant() throws Exception {
-        Restaurant restaurant = new Restaurant(4, "Mac", "Kontinent");
-        Restaurant save = repository.save(restaurant);
-        assertThat(save).isNull();
-    }
+    RestaurantCrud repository;
 
     @Test
     public void saveSetId() throws Exception {
@@ -34,13 +28,13 @@ public class RestaurantRepositoryTest extends SpringConfigOnTests {
         Restaurant restaurant = new Restaurant(null, "Sashlik", "Palatka");
         Restaurant save = repository.save(restaurant);
         assertThat(save.getId()).isNotNull();
-        List<Restaurant> all = repository.getAll();
+        List<Restaurant> all = repository.findAll();
         assertMatch(all, BURGER_KING, MC_DONALD, KFC, save);
     }
 
     @Test
     public void getAll() throws Exception {
-        List<Restaurant> all = repository.getAll();
+        List<Restaurant> all = repository.findAll();
         assertMatch(all, RestaurantData.getAllData());
     }
 
@@ -50,37 +44,37 @@ public class RestaurantRepositoryTest extends SpringConfigOnTests {
         restaurant.setName("Sushi");
         Restaurant save = repository.save(restaurant);
         assertThat(save).isNotNull();
-        List<Restaurant> all = repository.getAll();
+        List<Restaurant> all = repository.findAll();
         assertMatch(all, restaurant, BURGER_KING, KFC);
     }
 
     @Test
     public void getByIdNotReturnNull() throws Exception {
-        Restaurant byId = repository.getById(BURGER_KING.getId());
+        Restaurant byId = repository.findById(BURGER_KING.getId()).orElse(null);
         assertThat(byId).isNotNull();
     }
 
     @Test
     public void getByIdCorrectRestaurant() throws Exception {
         Restaurant restaurant = new Restaurant(BURGER_KING);
-        Restaurant byId = repository.getById(restaurant.getId());
+        Restaurant byId = repository.findById(restaurant.getId()).orElse(null);
         assertThat(byId).isEqualToComparingFieldByField(BURGER_KING);
     }
 
 
     @Test
     public void deleteNotExistRestaurant() throws Exception {
-        boolean delete = repository.delete(50);
-        assertThat(delete).isFalse();
-        List<Restaurant> all = repository.getAll();
+        int delete = repository.delete(50);
+        assertThat(delete).isEqualTo(0);
+        List<Restaurant> all = repository.findAll();
         assertMatch(all, RestaurantData.getAllData());
     }
 
     @Test
     public void deleteExistRestaurant() throws Exception {
-        boolean delete = repository.delete(BURGER_KING.getId());
-        assertThat(delete).isTrue();
-        List<Restaurant> all = repository.getAll();
+        int delete = repository.delete(BURGER_KING.getId());
+        assertThat(delete).isNotEqualTo(0);
+        List<Restaurant> all = repository.findAll();
         assertMatch(all, MC_DONALD, KFC);
     }
 
@@ -110,13 +104,13 @@ public class RestaurantRepositoryTest extends SpringConfigOnTests {
     public void getByIdQueryCount() throws Exception {
         countQueries.setLimit(1);
         Restaurant restaurant = new Restaurant(BURGER_KING);
-        repository.getById(restaurant.getId());
+        repository.findById(restaurant.getId());
     }
 
     @Test
     public void getAllQueryCount() throws Exception {
         countQueries.setLimit(1);
-        repository.getAll();
+        repository.findAll();
     }
 
     @Test

@@ -1,8 +1,7 @@
 package lunchVote.repository;
 
 import lunchVote.model.Lunch;
-import lunchVote.repository.queryCounter.CountInterceptor;
-import org.junit.Rule;
+import lunchVote.repository.dataJpa.springCrud.LunchCrud;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class LunchRepositoryTest extends SpringConfigOnTests{
 
     @Autowired
-    LunchRepository repository;
+    LunchCrud repository;
 
     @Test
     public void saveNotReturnNullOnNewLunch() throws Exception {
@@ -34,26 +33,26 @@ public class LunchRepositoryTest extends SpringConfigOnTests{
 
     @Test
     public void getByIdExistLunch() throws Exception {
-        Lunch byId = repository.getById(100007);
+        Lunch byId = repository.findById(100007).orElse(null);
         assertThat(byId).isNotNull()
                 .isEqualToComparingFieldByField(BIG_MACK);
     }
 
     @Test
     public void getByIdNotExistLunch() throws Exception {
-        Lunch byId = repository.getById(0);
+        Lunch byId = repository.findById(0).orElse(null);
         assertThat(byId).isNull();
     }
 
     @Test
     public void getByIdOnNegativeId() throws Exception {
-        Lunch byId = repository.getById(-200);
+        Lunch byId = repository.findById(-200).orElse(null);
         assertThat(byId).isNull();
     }
 
     @Test
     public void getAll() throws Exception {
-        List<Lunch> all = repository.getAll();
+        List<Lunch> all = repository.findAll();
         assertMatch(all, allLunch());
     }
 
@@ -72,7 +71,7 @@ public class LunchRepositoryTest extends SpringConfigOnTests{
         lunch.setPrice(250000);
         Lunch save = repository.save(lunch);
 
-        List<Lunch> all = repository.getAll();
+        List<Lunch> all = repository.findAll();
 
         assertMatch(all, BIG_MACK, CHIKEN, lunch);
     }
@@ -81,32 +80,32 @@ public class LunchRepositoryTest extends SpringConfigOnTests{
     public void saveInDatabase() throws Exception {
         Lunch nagets = new Lunch(null, LocalDate.now(), "Nagets", 9000, MC_DONALD);
         repository.save(nagets);
-        List<Lunch> all = repository.getAll();
+        List<Lunch> all = repository.findAll();
         assertMatch(all, VOPER, BIG_MACK, CHIKEN, nagets);
     }
 
     @Test
     public void deleteNotExistLunch() throws Exception {
-        boolean delete = repository.delete(12);
+        boolean delete = repository.delete(12) != 0;
         assertThat(delete).isFalse();
     }
 
     @Test
     public void deleteExistLunch() throws Exception {
-        boolean delete = repository.delete(CHIKEN.getId());
+        boolean delete = repository.delete(CHIKEN.getId())  != 0;
         assertThat(delete).isTrue();
     }
 
     @Test
     public void getByDayWhenLunchNotExist() throws Exception {
-        List<Lunch> allForDate = repository.getAllForDate(LocalDate.of(2017, 2, 19));
+        List<Lunch> allForDate = repository.getByDate(LocalDate.of(2017, 2, 19));
         assertThat(allForDate).isNotNull()
                               .isEmpty();
     }
 
     @Test
     public void getByDayWhenLunchExist() throws Exception {
-        List<Lunch> allForDate = repository.getAllForDate(BIG_MACK.getDate());
+        List<Lunch> allForDate = repository.getByDate(BIG_MACK.getDate());
         assertThat(allForDate).isNotNull()
                               .isNotEmpty();
 
@@ -115,7 +114,7 @@ public class LunchRepositoryTest extends SpringConfigOnTests{
 
     @Test
     public void getLunchWithRestaurant() throws Exception {
-        Lunch byId = repository.getById(VOPER.getId());
+        Lunch byId = repository.findById(VOPER.getId()).orElse(null);
         assertThat(byId).isNotNull();
         assertThat(byId.getRestaurant()).isNotNull();
         assertThat(byId.getRestaurant()).isEqualToComparingFieldByField(VOPER.getRestaurant());
@@ -144,19 +143,19 @@ public class LunchRepositoryTest extends SpringConfigOnTests{
     @Test
     public void getAllForDateQueryCount() throws Exception {
         countQueries.setLimit(1);
-        repository.getAllForDate(LocalDate.now());
+        repository.getByDate(LocalDate.now());
     }
 
     @Test
     public void getByIdQueryCount() throws Exception {
         countQueries.setLimit(1);
-        repository.getById(BIG_MACK.getId());
+        repository.findById(BIG_MACK.getId());
     }
 
     @Test
     public void getAllQueryCount() throws Exception {
         countQueries.setLimit(1);
-        repository.getAll();
+        repository.findAll();
     }
 
     @Test
