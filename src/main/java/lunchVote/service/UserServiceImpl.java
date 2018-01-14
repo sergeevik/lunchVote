@@ -1,7 +1,6 @@
-package lunchVote.repository.dataJpa;
+package lunchVote.service;
 
 import lunchVote.model.User;
-import lunchVote.repository.UserRepository;
 import lunchVote.repository.dataJpa.springCrud.UserCrud;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -11,10 +10,14 @@ import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
-public class UserRepositoryImplDataJpa implements UserRepository {
+public class UserServiceImpl implements UserService {
+
+    private final UserCrud crud;
 
     @Autowired
-    private UserCrud crud;
+    public UserServiceImpl(UserCrud crud) {
+        this.crud = crud;
+    }
 
     @Override
     public User getByEmail(String email) {
