@@ -6,7 +6,6 @@ import lunchVote.transferObjects.VoteCounter;
 import java.time.LocalDate;
 
 public interface VoteService {
-    Vote create(int userId, int lunchId);
-    Vote update(int userId, int lunchId);
+    Vote save(int lunchId, int userId, LocalDate date);
     VoteCounter getDayResult(LocalDate date);
 }
