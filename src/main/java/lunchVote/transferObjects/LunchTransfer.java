@@ -1,13 +1,17 @@
 package lunchVote.transferObjects;
 
+import java.time.LocalDate;
+
 public class LunchTransfer {
     private String description;
     private Double price;
+    private LocalDate date;
     private int restaurantId;
 
-    public LunchTransfer(String description, Double price, int restaurantId) {
+    public LunchTransfer(String description, Double price, LocalDate date, int restaurantId) {
         this.description = description;
         this.price = price;
+        this.date = date;
         this.restaurantId = restaurantId;
     }
 
@@ -36,5 +40,13 @@ public class LunchTransfer {
 
     public void setRestaurantId(int restaurantId) {
         this.restaurantId = restaurantId;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }
