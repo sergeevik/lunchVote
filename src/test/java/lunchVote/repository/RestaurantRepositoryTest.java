@@ -35,7 +35,7 @@ public class RestaurantRepositoryTest extends SQLAnnotation {
     @Test
     public void getAll() throws Exception {
         List<Restaurant> all = repository.findAll();
-        assertMatch(all, RestaurantData.getAllData());
+        assertMatch(all, RestaurantData.getAllRestaurant());
     }
 
     @Test
@@ -67,7 +67,7 @@ public class RestaurantRepositoryTest extends SQLAnnotation {
         int delete = repository.delete(50);
         assertThat(delete).isEqualTo(0);
         List<Restaurant> all = repository.findAll();
-        assertMatch(all, RestaurantData.getAllData());
+        assertMatch(all, RestaurantData.getAllRestaurant());
     }
 
     @Test
