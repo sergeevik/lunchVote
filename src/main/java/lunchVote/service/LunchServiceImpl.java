@@ -14,14 +14,14 @@ import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
-public class LunchRepositoryImplDataJpa implements LunchService{
+public class LunchServiceImpl implements LunchService{
 
     private final LunchCrud crud;
 
     private final RestaurantCrud restaurantCrud;
 
     @Autowired
-    public LunchRepositoryImplDataJpa(LunchCrud crud, RestaurantCrud restaurantCrud) {
+    public LunchServiceImpl(LunchCrud crud, RestaurantCrud restaurantCrud) {
         this.crud = crud;
         this.restaurantCrud = restaurantCrud;
     }
