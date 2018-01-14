@@ -13,7 +13,7 @@ import static lunchVote.testData.RestaurantData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class RestaurantRepositoryTest extends SpringConfigOnTests {
+public class RestaurantRepositoryTest extends SQLAnnotation {
     @Autowired
     RestaurantCrud repository;
 

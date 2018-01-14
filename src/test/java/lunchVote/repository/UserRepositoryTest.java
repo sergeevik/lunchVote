@@ -13,7 +13,7 @@ import static lunchVote.testData.UserData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class UserRepositoryTest extends SpringConfigOnTests {
+public class UserRepositoryTest extends SQLAnnotation {
 
     @Autowired
     private UserCrud repository;
@@ -28,9 +28,8 @@ public class UserRepositoryTest extends SpringConfigOnTests {
     @Test
     public void getExistUser() throws Exception {
         Optional<User> byId = repository.findById(JURA.getId());
-        assertThat(byId).isNotEmpty();
-
-        assertThat(byId.get()).isEqualToIgnoringGivenFields(JURA, "registered");
+        assertThat(byId).isPresent()
+                    .contains(JURA);
     }
 
     @Test

@@ -14,12 +14,10 @@ import java.util.List;
 import static lunchVote.testData.LunchData.CHIKEN;
 import static lunchVote.testData.UserData.ADMIN;
 import static lunchVote.testData.UserData.JURA;
-import static lunchVote.testData.VoteData.JURA_VOTE;
-import static lunchVote.testData.VoteData.SAVE_VOTE_COUNT_QUERY;
-import static lunchVote.testData.VoteData.USER_VOTE;
+import static lunchVote.testData.VoteData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class VoteRepositoryTest extends SpringConfigOnTests{
+public class VoteRepositoryTest extends SQLAnnotation {
 
     @Autowired
     private VoteCrud repository;
