@@ -3,8 +3,6 @@ package lunchVote.testData;
 import lunchVote.model.Role;
 import lunchVote.model.User;
 
-import java.util.Arrays;
-
 public class UserData {
 
     public static final User ADMIN =
@@ -16,7 +14,7 @@ public class UserData {
     public static final User USER =
             new User(100002, "user", "user@lunch.com", "pass", Role.ROLE_USER);
 
-    public static Iterable<User> getAllUsers(){
-        return Arrays.asList(ADMIN, USER, JURA);
-    }
+    public static final User SAVE_NEW =
+            new User(null, "Ola", "ola@mail.ru", "petty123", Role.ROLE_USER);
+
 }
