@@ -1,7 +1,6 @@
-package lunchVote.repository.dataJpa;
+package lunchVote.service;
 
 import lunchVote.model.Vote;
-import lunchVote.repository.VoteRepository;
 import lunchVote.repository.dataJpa.springCrud.VoteCrud;
 import lunchVote.transferObjects.VoteCounter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +12,12 @@ import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
-public class VoteRepositoryImplDataJpa implements VoteRepository {
-    @Autowired
-    private VoteCrud crud;
+public class VoteServiceImpl implements VoteService {
+    private final VoteCrud crud;
 
-    @Override
-    public Vote getByUserIdAndDate(int userId, LocalDate date) {
-        return crud.findByUserAndDate(userId, date);
+    @Autowired
+    public VoteServiceImpl(VoteCrud crud) {
+        this.crud = crud;
     }
 
     @Override
@@ -35,7 +33,7 @@ public class VoteRepositoryImplDataJpa implements VoteRepository {
     }
 
     @Override
-    public List<VoteCounter>  getLunchVotesOnDate(LocalDate date) {
+    public List<VoteCounter> getDayResult(LocalDate date) {
         return crud.getLunchVoteOnDate(date);
     }
 }
