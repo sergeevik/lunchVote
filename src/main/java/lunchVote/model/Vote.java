@@ -6,7 +6,12 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "vote")
-public class Vote extends AbstractBaseEntity{
+public class Vote {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     @Column(name = "user_id")
     private int userId;
 
@@ -25,7 +30,7 @@ public class Vote extends AbstractBaseEntity{
     }
 
     public Vote(Integer id, int userId, int lunch, @NotNull LocalDate date) {
-        super(id);
+        this.id = id;
         this.userId = userId;
         this.lunchId = lunch;
         this.date = date;
@@ -53,5 +58,13 @@ public class Vote extends AbstractBaseEntity{
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

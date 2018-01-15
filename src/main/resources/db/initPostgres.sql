@@ -49,7 +49,7 @@ CREATE TABLE lunch
 
 CREATE TABLE vote
 (
-  id               INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  id               SERIAL PRIMARY KEY,
   user_id          INTEGER    NOT NULL,
   lunch_id         INTEGER    NOT NULL,
   date             DATE DEFAULT now() NOT NULL,
