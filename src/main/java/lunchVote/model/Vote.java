@@ -3,6 +3,7 @@ package lunchVote.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "vote")
@@ -66,5 +67,22 @@ public class Vote {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Vote vote = (Vote) o;
+
+        return Objects.equals(id, vote.id) &&
+                Objects.equals(userId, vote.userId) &&
+                Objects.equals(lunchId, vote.lunchId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userId, lunchId);
     }
 }
