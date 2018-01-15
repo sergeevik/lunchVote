@@ -27,7 +27,7 @@ public class CountInterceptor extends EmptyInterceptor implements TestRule{
             public void evaluate() throws Throwable {
                 resetCounter();
                 base.evaluate();
-                if (limit > 0) {
+                if (limit > -1) {
                     logCountQuery(description.getTestClass().getSimpleName(), description.getMethodName(), actualCount);
                     if (actualCount > limit)
                         Assert.fail(failString(description.getTestClass().getSimpleName(), description.getMethodName()));
