@@ -34,8 +34,7 @@ public class VoteRepositoryTest extends SQLAnnotation {
     @Test
     public void getByUserIdAndDate() throws Exception {
         Vote byUserIdAndDate = repository.findByUserAndDate(JURA.getId(), JURA_VOTE.getDate());
-        assertThat(byUserIdAndDate).isNotNull()
-                .isEqualToComparingFieldByField(JURA_VOTE);
+        assertThat(byUserIdAndDate).isNotNull().isEqualToIgnoringGivenFields(JURA_VOTE, "id", "date");
     }
 
     @Test
@@ -51,7 +50,7 @@ public class VoteRepositoryTest extends SQLAnnotation {
         assertThat(save).isNotNull();
 
         Vote byUserIdAndDate = repository.findByUserAndDate(USER_VOTE.getUserId(), USER_VOTE.getDate());
-        assertThat(byUserIdAndDate).isEqualToComparingFieldByField(USER_VOTE);
+        assertThat(byUserIdAndDate).isEqualToIgnoringGivenFields(USER_VOTE, "id", "date");
     }
 
     @Test
@@ -90,7 +89,7 @@ public class VoteRepositoryTest extends SQLAnnotation {
 
     @Test
     public void saveQueryCount() throws Exception {
-        countQueries.setLimit(2);
+        countQueries.setLimit(1);
         repository.save(SAVE_VOTE_COUNT_QUERY);
     }
 
