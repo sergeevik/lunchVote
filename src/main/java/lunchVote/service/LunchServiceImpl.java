@@ -7,13 +7,15 @@ import lunchVote.repository.dataJpa.springCrud.RestaurantCrud;
 import lunchVote.transferObjects.LunchTransfer;
 import lunchVote.util.LunchConverter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Repository
+@Service
 @Transactional(readOnly = true)
 public class LunchServiceImpl implements LunchService{
 
@@ -28,12 +30,14 @@ public class LunchServiceImpl implements LunchService{
     }
 
     @Override
+    @Cacheable("lunch")
     public List<Lunch> getAllForDate(LocalDate date) {
         return crud.getByDate(date);
     }
 
     @Override
     @Transactional
+    @CacheEvict(value = "lunch", allEntries = true)
     public Lunch save(LunchTransfer lunch) {
         Restaurant one = restaurantCrud.getOne(lunch.getRestaurantId());
         Lunch toSave = LunchConverter.fromTo(lunch);
@@ -43,6 +47,7 @@ public class LunchServiceImpl implements LunchService{
 
     @Override
     @Transactional
+    @CacheEvict(value = "lunch", allEntries = true)
     public boolean delete(int id) {
         return crud.delete(id) != 0;
     }

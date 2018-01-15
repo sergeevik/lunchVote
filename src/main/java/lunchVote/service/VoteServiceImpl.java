@@ -4,13 +4,13 @@ import lunchVote.model.Vote;
 import lunchVote.repository.dataJpa.springCrud.VoteCrud;
 import lunchVote.transferObjects.VoteCounter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Repository
+@Service
 @Transactional(readOnly = true)
 public class VoteServiceImpl implements VoteService {
     private final VoteCrud crud;
