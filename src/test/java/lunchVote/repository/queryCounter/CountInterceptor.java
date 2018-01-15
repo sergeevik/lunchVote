@@ -13,7 +13,7 @@ public class CountInterceptor extends EmptyInterceptor implements TestRule{
     private static final Logger LOG = LoggerFactory.getLogger(CountInterceptor.class);
 
     private static int actualCount = 0;
-    private int limit = Integer.MAX_VALUE;
+    private int limit = -1;
     @Override
     public String onPrepareStatement(String sql) {
         actualCount++;
@@ -27,9 +27,11 @@ public class CountInterceptor extends EmptyInterceptor implements TestRule{
             public void evaluate() throws Throwable {
                 resetCounter();
                 base.evaluate();
-                logCountQuery(description.getTestClass().getSimpleName(), description.getMethodName(), actualCount);
-                if (actualCount > limit)
-                    Assert.fail(failString(description.getTestClass().getSimpleName(), description.getMethodName()));
+                if (limit > 0) {
+                    logCountQuery(description.getTestClass().getSimpleName(), description.getMethodName(), actualCount);
+                    if (actualCount > limit)
+                        Assert.fail(failString(description.getTestClass().getSimpleName(), description.getMethodName()));
+                }
             }
         };
     }
