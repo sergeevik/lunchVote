@@ -22,11 +22,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     @Transactional
     public Restaurant save(Restaurant restaurant) {
-        if (!restaurant.isNew() && get(restaurant.getId()) == null) {
-            return null;
-        }else {
-            return crud.save(restaurant);
-        }
+        return crud.save(restaurant);
     }
 
     @Override
