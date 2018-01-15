@@ -3,14 +3,13 @@ package lunchVote.service;
 import lunchVote.SpringConfigOnTests;
 import lunchVote.model.Vote;
 import lunchVote.repository.dataJpa.springCrud.VoteCrud;
-import lunchVote.transferObjects.VoteCounter;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
-import java.util.List;
 
-import static lunchVote.testData.VoteData.USER_VOTE;
+import static lunchVote.testData.VoteData.ADMIN_VOTE;
+import static lunchVote.testData.VoteData.SAVE_VOTE_COUNT_QUERY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -27,20 +26,34 @@ public class VoteServiceTest extends SpringConfigOnTests {
 
     @Test
     public void save() throws Exception {
-        Vote voteSave = new Vote(USER_VOTE);
-        voteSave.setId(null);
+        Vote voteSave = new Vote(SAVE_VOTE_COUNT_QUERY);
         when(repository.save(voteSave)).thenReturn(voteSave);
         Vote save = service.save(voteSave.getLunchId(), voteSave.getUserId(), voteSave.getDate());
 
+        verify(repository, times(1)).findByUserAndDate(voteSave.getUserId(), voteSave.getDate());
         verify(repository, times(1)).save(voteSave);
         assertThat(save).isNotNull()
-                        .isEqualTo(voteSave);
+                        .isEqualToComparingFieldByField(voteSave);
+    }
+
+    @Test
+    public void update() throws Exception {
+        Vote vote = new Vote(ADMIN_VOTE);
+        when(repository.findByUserAndDate(vote.getUserId(), vote.getDate())).thenReturn(vote);
+        when(repository.save(vote)).thenReturn(vote);
+
+        Vote save = service.save(vote.getLunchId(), vote.getUserId(), vote.getDate());
+
+        verify(repository, times(1)).findByUserAndDate(vote.getUserId(), vote.getDate());
+        verify(repository, times(1)).save(vote);
+
+        assertThat(save).isNotNull().isEqualToComparingFieldByField(vote);
     }
 
     @Test
     public void getLunchVotes() throws Exception {
         LocalDate now = LocalDate.now();
-        List<VoteCounter> lunchVotesOnDate = service.getDayResult(now);
+        service.getDayResult(now);
         verify(repository, times(1)).getLunchVoteOnDate(now);
     }
 
