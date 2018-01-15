@@ -11,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.EnumSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -119,16 +120,12 @@ public class User extends AbstractBaseEntity{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-
         User user = (User) o;
-
-        return email != null ? email.equals(user.email) : user.email == null;
+        return Objects.equals(email, user.email);
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        return result;
+        return Objects.hash(super.hashCode(), email);
     }
 }

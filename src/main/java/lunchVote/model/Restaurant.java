@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
@@ -60,23 +61,19 @@ public class Restaurant extends AbstractBaseEntity {
                 '}';
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-
         Restaurant that = (Restaurant) o;
-
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        return address != null ? address.equals(that.address) : that.address == null;
+        return Objects.equals(name, that.name) &&
+                Objects.equals(address, that.address);
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
-        return result;
+        return Objects.hash(super.hashCode(), name, address);
     }
 }
