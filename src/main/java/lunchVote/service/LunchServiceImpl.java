@@ -5,6 +5,7 @@ import lunchVote.model.Restaurant;
 import lunchVote.repository.dataJpa.springCrud.LunchCrud;
 import lunchVote.repository.dataJpa.springCrud.RestaurantCrud;
 import lunchVote.transferObjects.LunchTransfer;
+import lunchVote.util.LunchConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,8 +36,8 @@ public class LunchServiceImpl implements LunchService{
     @Transactional
     public Lunch save(LunchTransfer lunch) {
         Restaurant one = restaurantCrud.getOne(lunch.getRestaurantId());
-        Integer price = new Double(lunch.getPrice() * 100).intValue();
-        Lunch toSave = new Lunch(lunch.getId(), lunch.getDate(), lunch.getDescription(), price, one);
+        Lunch toSave = LunchConverter.fromTo(lunch);
+        toSave.setRestaurant(one);
         return crud.save(toSave);
     }
 
