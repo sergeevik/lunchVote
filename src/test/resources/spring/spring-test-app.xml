@@ -5,6 +5,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="lunchVote.**.repository"/>
+    <context:component-scan base-package="lunchVote.**.service"/>
 
     <import resource="spring-db.xml"/>
     <import resource="spring-app.xml"/>
@@ -31,7 +32,7 @@
 
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
-                  p:showSql="false">
+                  p:showSql="true">
             </bean>
         </property>
 
