@@ -30,8 +30,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @CacheEvict(value = "users", allEntries = true)
     public User save(User object) {
-        if(!object.isNew() && getById(object.getId()) == null)
-            return null;
         return crud.save(object);
     }
 
