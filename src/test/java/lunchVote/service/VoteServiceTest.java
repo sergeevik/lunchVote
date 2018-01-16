@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.time.LocalDate;
 
 import static lunchVote.testData.VoteData.ADMIN_VOTE;
-import static lunchVote.testData.VoteData.SAVE_VOTE_COUNT_QUERY;
+import static lunchVote.testData.VoteData.SAVE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -26,7 +26,7 @@ public class VoteServiceTest extends SpringConfigOnTests {
 
     @Test
     public void save() throws Exception {
-        Vote voteSave = new Vote(SAVE_VOTE_COUNT_QUERY);
+        Vote voteSave = new Vote(SAVE);
         when(repository.save(voteSave)).thenReturn(voteSave);
         Vote save = service.save(voteSave.getLunchId(), voteSave.getUserId(), voteSave.getDate());
 

@@ -1,6 +1,7 @@
 package lunchVote.repository;
 
 import lunchVote.model.Lunch;
+import lunchVote.model.Restaurant;
 import lunchVote.repository.dataJpa.springCrud.LunchCrud;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +22,13 @@ public class LunchRepositoryTest extends SQLAnnotation {
 
     @Test
     public void saveNotReturnNullOnNewLunch() throws Exception {
-        Lunch save = repository.save(new Lunch(null, LocalDate.now(), "Gamburger", 4500, BURGER_KING));
+        Lunch save = repository.save(new Lunch(null, LocalDate.now(), "Gamburger", 4500, new Restaurant(BURGER_KING)));
         assertThat(save).isNotNull();
     }
 
     @Test
     public void saveSetIdOnNewLunch() throws Exception {
-        Lunch save = repository.save(new Lunch(null, LocalDate.now(), "Zinger", 4500, KFC));
+        Lunch save = repository.save(new Lunch(null, LocalDate.now(), "Zinger", 4500, new Restaurant(KFC)));
         assertThat(save.getId()).isNotNull();
     }
 
@@ -78,7 +79,7 @@ public class LunchRepositoryTest extends SQLAnnotation {
 
     @Test
     public void saveInDatabase() throws Exception {
-        Lunch nagets = new Lunch(null, LocalDate.now(), "Nagets", 9000, MC_DONALD);
+        Lunch nagets = new Lunch(null, LocalDate.now(), "Nagets", 9000, new Restaurant(MC_DONALD));
         repository.save(nagets);
         List<Lunch> all = repository.findAll();
         assertMatch(all, VOPER, BIG_MACK, CHIKEN, nagets);
@@ -129,7 +130,7 @@ public class LunchRepositoryTest extends SQLAnnotation {
     @Test
     public void saveQueryCount() throws Exception {
         countQueries.setLimit(2);
-        repository.save(new Lunch(null, LocalDate.now(), "Nagets", 9000, MC_DONALD));
+        repository.save(new Lunch(null, LocalDate.now(), "Nagets", 9000, new Restaurant(MC_DONALD)));
     }
 
     @Test

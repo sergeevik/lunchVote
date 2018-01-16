@@ -1,5 +1,6 @@
 package lunchVote.service.cacheTest;
 
+import lunchVote.model.Restaurant;
 import lunchVote.service.RestaurantService;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,7 +55,7 @@ public class RestaurantCacheTest extends CacheConfig{
         queryCounter.setLimit(4);
 
         service.getAll();
-        service.save(SAVE_NEW);
+        service.save(new Restaurant(SAVE_NEW));
         for (int i = 0; i < 3; i++) {
             service.getAll();
         }

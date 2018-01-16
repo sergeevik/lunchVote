@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 
-import static lunchVote.testData.VoteData.SAVE_VOTE_COUNT_QUERY;
+import static lunchVote.testData.VoteData.SAVE;
 
 public class VoteServiceQueryCountTest extends CacheConfig {
 
@@ -25,7 +25,7 @@ public class VoteServiceQueryCountTest extends CacheConfig {
     @Test
     public void save() throws Exception {
         queryCounter.setLimit(2);
-        Vote save = new Vote(SAVE_VOTE_COUNT_QUERY);
+        Vote save = new Vote(SAVE);
         service.save(save.getLunchId(), save.getUserId(), save.getDate());
     }
 

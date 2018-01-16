@@ -1,13 +1,12 @@
 package lunchVote.service.queryCount;
 
+import lunchVote.model.User;
 import lunchVote.service.UserService;
 import lunchVote.service.cacheTest.CacheConfig;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static lunchVote.testData.UserData.ADMIN;
-import static lunchVote.testData.UserData.SAVE_NEW;
-import static lunchVote.testData.UserData.USER;
+import static lunchVote.testData.UserData.*;
 
 public class UserServiceQueryCountTest extends CacheConfig {
 
@@ -29,7 +28,7 @@ public class UserServiceQueryCountTest extends CacheConfig {
     @Test
     public void save() throws Exception {
         queryCounter.setLimit(3);
-        service.save(SAVE_NEW);
+        service.save(new User(SAVE_NEW));
     }
 
     @Test
