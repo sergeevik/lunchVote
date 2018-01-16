@@ -90,7 +90,7 @@ public class VoteRepositoryTest extends SQLAnnotation {
     @Test
     public void saveQueryCount() throws Exception {
         countQueries.setLimit(1);
-        repository.save(SAVE_VOTE_COUNT_QUERY);
+        repository.save(new Vote(SAVE_VOTE_COUNT_QUERY));
     }
 
     @Test
