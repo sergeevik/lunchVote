@@ -127,7 +127,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
+            <artifactId>spring-webmvc</artifactId>
         </dependency>
 
 
@@ -216,6 +216,13 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>${jackson-json.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.skyscreamer</groupId>
+            <artifactId>jsonassert</artifactId>
+            <version>1.5.0</version>
+            <scope>test</scope>
+        </dependency>
+
 
     </dependencies>
 
