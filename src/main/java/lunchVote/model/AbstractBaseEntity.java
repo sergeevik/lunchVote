@@ -1,9 +1,12 @@
 package lunchVote.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @MappedSuperclass
+@JsonIgnoreProperties(value = {"new"})
 public abstract class AbstractBaseEntity {
     private static final int SEQ_START = 100000;
 
