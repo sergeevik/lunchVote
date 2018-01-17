@@ -12,8 +12,12 @@ import java.util.List;
 @RequestMapping("/lunches")
 public class LunchRest {
 
+    private final LunchService lunchService;
+
     @Autowired
-    LunchService lunchService;
+    public LunchRest(LunchService lunchService) {
+        this.lunchService = lunchService;
+    }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Lunch create(Lunch lunch){

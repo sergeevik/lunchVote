@@ -12,8 +12,12 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserRest {
 
+    private final UserService userService;
+
     @Autowired
-    UserService userService;
+    public UserRest(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public User create(User user){

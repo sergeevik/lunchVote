@@ -13,8 +13,12 @@ import java.util.List;
 @RequestMapping("/votes")
 public class VoteRest {
 
+    private final VoteService voteService;
+
     @Autowired
-    VoteService voteService;
+    public VoteRest(VoteService voteService) {
+        this.voteService = voteService;
+    }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Vote create(@RequestBody Vote vote){
