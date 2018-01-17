@@ -27,7 +27,7 @@ public class UserRest {
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(){}
 
-    @DeleteMapping(value = "/id")
+    @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable("id") int id){}
 
     @GetMapping
