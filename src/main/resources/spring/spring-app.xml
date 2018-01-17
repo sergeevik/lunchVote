@@ -7,6 +7,7 @@
     <import resource="spring-cache.xml"/>
     <context:component-scan base-package="lunchVote.**.repository"/>
     <context:component-scan base-package="lunchVote.**.service"/>
+    <context:component-scan base-package="lunchVote.**.web"/>
 
 
 </beans>
