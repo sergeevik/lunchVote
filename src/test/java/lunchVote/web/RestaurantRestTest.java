@@ -68,8 +68,6 @@ public class RestaurantRestTest extends MvcConfig{
     @Test
     public void deleteTest() throws Exception {
         int id = KFC.getId();
-        when( service.delete(id)).thenReturn(true);
-
         mockMvc.perform(delete(URL + "/" + id))
                 .andExpect(status().isNoContent())
                 .andDo(print());

@@ -87,8 +87,6 @@ public class LunchRestTest extends MvcConfig{
     public void deleteQuery() throws Exception {
         int id = VOPER.getId();
 
-        when(service.delete(id)).thenReturn(true);
-
         mockMvc.perform(delete(URL + "/" + id))
                 .andDo(print())
                 .andExpect(status().isNoContent());
