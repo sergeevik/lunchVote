@@ -3,20 +3,16 @@ package lunchVote.web;
 import lunchVote.model.Restaurant;
 import lunchVote.service.RestaurantService;
 import lunchVote.web.json.JsonUtil;
-import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-
-import java.util.List;
 
 import static lunchVote.testData.RestaurantData.*;
-import static lunchVote.utils.TestDataUtil.*;
+import static lunchVote.utils.TestDataUtil.toList;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
