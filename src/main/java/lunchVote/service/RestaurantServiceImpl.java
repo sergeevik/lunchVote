@@ -11,9 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static lunchVote.util.ValidateUtil.checkEntityNotNull;
-import static lunchVote.util.ValidateUtil.checkIdEquals;
-import static lunchVote.util.ValidateUtil.checkNew;
+import static lunchVote.util.ValidateUtil.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -53,8 +51,9 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     @Transactional
     @CacheEvict(value = "restaurant", allEntries = true)
-    public boolean delete(int id) {
-        return crud.delete(id) != 0;
+    public void delete(int id) {
+        boolean delete = crud.delete(id) != 0;
+        checkDeleteSuccess(delete, id);
     }
 
     @Override

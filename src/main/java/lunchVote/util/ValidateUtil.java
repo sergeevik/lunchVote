@@ -24,5 +24,11 @@ public class ValidateUtil {
         }
     }
 
+    public static void checkDeleteSuccess(boolean delete, int id) {
+        if (!delete) {
+            throw new NotFoundEntity("Not found entity with id=" + id);
+        }
+    }
+
 
 }
