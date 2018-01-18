@@ -33,7 +33,7 @@ public class LunchServiceQueryCountTest extends CacheConfig {
     @Test
     public void create() throws Exception {
         queryCounter.setLimit(2);
-        service.save(LunchConverter.asTo(SAVE_NEW));
+        service.create(LunchConverter.asTo(SAVE_NEW));
     }
 
     @Test
@@ -41,7 +41,7 @@ public class LunchServiceQueryCountTest extends CacheConfig {
         queryCounter.setLimit(3);
         Lunch lunch = new Lunch(VOPER);
         lunch.setPrice(220);
-        service.save(LunchConverter.asTo(lunch));
+        service.update(LunchConverter.asTo(lunch), lunch.getId());
     }
 
     @Test

@@ -38,12 +38,26 @@ public class LunchServiceImpl implements LunchService{
     @Override
     @Transactional
     @CacheEvict(value = "lunch", allEntries = true)
-    public Lunch save(LunchTransfer lunch) {
+    public Lunch create(LunchTransfer lunch) {
+        Lunch toSave = getLunch(lunch);
+        return crud.save(toSave);
+    }
+
+    @Override
+    @Transactional
+    @CacheEvict(value = "lunch", allEntries = true)
+    public Lunch update(LunchTransfer lunch, int id) {
+        return crud.save(getLunch(lunch));
+    }
+
+    private Lunch getLunch(LunchTransfer lunch) {
         Restaurant one = restaurantCrud.getOne(lunch.getRestaurantId());
         Lunch toSave = LunchConverter.fromTo(lunch);
         toSave.setRestaurant(one);
-        return crud.save(toSave);
+        return toSave;
     }
+
+
 
     @Override
     @Transactional

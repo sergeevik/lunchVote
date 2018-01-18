@@ -35,7 +35,7 @@ public class RestaurantRestTest extends MvcConfig{
         Restaurant restaurant = new Restaurant(SAVE_NEW);
 
 
-        when(service.save(restaurant)).thenReturn(restaurant);
+        when(service.create(restaurant)).thenReturn(restaurant);
 
         mockMvc.perform(post(URL)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -45,7 +45,7 @@ public class RestaurantRestTest extends MvcConfig{
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(content().json(JsonUtil.writeValue(restaurant)));
 
-        verify(service, times(1)).save(restaurant);
+        verify(service, times(1)).create(restaurant);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class RestaurantRestTest extends MvcConfig{
         Restaurant restaurant = new Restaurant(KFC);
         restaurant.setName("MVC Update");
 
-        when(service.save(restaurant)).thenReturn(restaurant);
+        when(service.update(restaurant, restaurant.getId())).thenReturn(restaurant);
 
         mockMvc.perform(put(URL + "/" + restaurant.getId())
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -61,7 +61,7 @@ public class RestaurantRestTest extends MvcConfig{
                 .andExpect(status().isOk())
                 .andDo(print());
 
-        verify(service, times(1)).save(restaurant);
+        verify(service, times(1)).update(restaurant, restaurant.getId());
 
     }
 

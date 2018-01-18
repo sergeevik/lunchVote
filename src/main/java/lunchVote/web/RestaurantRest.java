@@ -24,13 +24,13 @@ public class RestaurantRest {
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public Restaurant create(@RequestBody Restaurant restaurant){
-        return restaurantService.save(restaurant);
+        return restaurantService.create(restaurant);
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@RequestBody Restaurant restaurant,
                         @PathVariable("id") int id){
-        restaurantService.save(restaurant);
+        restaurantService.update(restaurant, id);
     }
 
     @DeleteMapping(value = "/{id}")

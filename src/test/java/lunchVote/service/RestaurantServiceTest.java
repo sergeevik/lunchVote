@@ -24,9 +24,9 @@ public class RestaurantServiceTest extends SpringConfigOnTests {
     }
 
     @Test
-    public void save() throws Exception {
+    public void create() throws Exception {
         Restaurant restaurant = new Restaurant(SAVE_NEW);
-        service.save(restaurant);
+        service.create(restaurant);
         verify(repository, times(1)).save(restaurant);
     }
 
@@ -40,10 +40,7 @@ public class RestaurantServiceTest extends SpringConfigOnTests {
     public void update() throws Exception {
         Restaurant restaurant = new Restaurant(MC_DONALD);
         restaurant.setName("Sushi");
-
-        when(repository.findById(restaurant.getId())).thenReturn(Optional.of(restaurant));
-
-        service.save(restaurant);
+        service.update(restaurant, restaurant.getId());
         verify(repository, times(1)).save(restaurant);
     }
 

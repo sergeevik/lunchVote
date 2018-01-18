@@ -29,12 +29,12 @@ public class LunchRest {
     @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public Lunch create(@RequestBody LunchTransfer lunch){
-        return lunchService.save(lunch);
+        return lunchService.create(lunch);
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@RequestBody LunchTransfer lunch, @PathVariable("id") int id){
-        lunchService.save(lunch);
+        lunchService.update(lunch, id);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

@@ -47,19 +47,40 @@ public class RestaurantCacheTest extends CacheConfig{
      * Queries:
      * 1 - getAll
      * 2 - get id (PK auto_generate)
-     * 3 - save
+     * 3 - create
      * 4 - getAll
      */
     @Test
-    public void evictSave() throws Exception {
+    public void evictCreate() throws Exception {
         queryCounter.setLimit(4);
 
         service.getAll();
-        service.save(new Restaurant(SAVE_NEW));
+        service.create(new Restaurant(SAVE_NEW));
         for (int i = 0; i < 3; i++) {
             service.getAll();
         }
     }
+
+    /**
+     * Queries:
+     * 1 - getAll
+     * 2 - get id (PK auto_generate)
+     * 3 - update
+     * 4 - getAll
+     */
+    @Test
+    public void evictUpdate() throws Exception {
+        queryCounter.setLimit(4);
+
+        service.getAll();
+        Restaurant restaurant = new Restaurant(MC_DONALD);
+        restaurant.setName("Chio-Rio");
+        service.update(restaurant, restaurant.getId());
+        for (int i = 0; i < 3; i++) {
+            service.getAll();
+        }
+    }
+
     /**
      * Queries:
      * 1 - get
