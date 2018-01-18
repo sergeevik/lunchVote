@@ -23,8 +23,7 @@ public interface VoteCrud extends JpaRepository<Vote, Integer>{
 
     @Modifying
     @Transactional
-    @Query("UPDATE Vote vote SET vote.lunchId=:lunchId WHERE vote.userId=:userId And vote.date=:date")
-    int update(@Param("userId") int userId,
-                @Param("lunchId") int lunchId,
-                @Param("date") LocalDate date);
+    @Query("UPDATE Vote vote SET vote.lunchId=:lunchId WHERE vote.id=:voteId")
+    int update(@Param("voteId") int voteId,
+                @Param("lunchId") int lunchId);
 }
