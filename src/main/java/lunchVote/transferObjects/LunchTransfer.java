@@ -1,6 +1,7 @@
 package lunchVote.transferObjects;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class LunchTransfer {
     private Integer id;
@@ -58,5 +59,21 @@ public class LunchTransfer {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LunchTransfer that = (LunchTransfer) o;
+        return restaurantId == that.restaurantId &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(price, that.price) &&
+                Objects.equals(date, that.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(description, price, date, restaurantId);
     }
 }
