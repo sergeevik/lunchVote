@@ -13,7 +13,7 @@ import java.util.Objects;
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "restaurant")
-public class Restaurant extends AbstractBaseEntity {
+public class Restaurant extends AbstractBaseEntity implements HasId {
     @Column(name = "name")
     @NotBlank
     @Size(max = 255)

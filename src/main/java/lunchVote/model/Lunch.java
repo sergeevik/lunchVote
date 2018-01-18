@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "lunch")
-public class Lunch extends AbstractBaseEntity{
+public class Lunch extends AbstractBaseEntity implements HasId{
 
     @Column(name = "date")
     @NotNull

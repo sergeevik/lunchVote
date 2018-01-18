@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "vote")
-public class Vote {
+public class Vote implements HasId{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,6 +67,11 @@ public class Vote {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean isNew() {
+        return id==null;
     }
 
     @Override
