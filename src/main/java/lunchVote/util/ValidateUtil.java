@@ -8,12 +8,12 @@ import java.util.Objects;
 
 public class ValidateUtil {
     public static void checkIdEquals(HasId object, int id){
-        Objects.requireNonNull(object);
-        if (object.getId() == null || !object.getId().equals(id))
+        Objects.requireNonNull(object, "Entity ");
+        if (!object.getId().equals(id))
             throw new IdNotEqualsException();
     }
 
-    public static void checkEntityNotNull(HasId object, int id){
+    public static <T extends HasId> void checkEntityNotNull(T object, int id){
         if (object == null)
             throw new NotFoundEntity("Not found entity with id=" + id);
     }
