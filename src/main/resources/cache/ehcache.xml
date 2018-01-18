@@ -28,7 +28,15 @@
         <heap>50</heap>
     </cache-template>
 
+    <cache-template name="vote">
+        <expiry>
+            <ttl unit="days">1</ttl>
+        </expiry>
+        <heap>1000</heap>
+    </cache-template>
+
     <cache alias="users" uses-template="users"/>
     <cache alias="restaurant" uses-template="restaurant"/>
     <cache alias="lunch" uses-template="lunch"/>
+    <cache alias="vote" uses-template="vote"/>
 </config>
