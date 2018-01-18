@@ -3,6 +3,7 @@ package lunchVote.service;
 import lunchVote.SpringConfigOnTests;
 import lunchVote.model.Restaurant;
 import lunchVote.repository.dataJpa.springCrud.RestaurantCrud;
+import lunchVote.testData.RestaurantData;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,6 +41,8 @@ public class RestaurantServiceTest extends SpringConfigOnTests {
     public void update() throws Exception {
         Restaurant restaurant = new Restaurant(MC_DONALD);
         restaurant.setName("Sushi");
+        when(repository.save(restaurant)).thenReturn(restaurant);
+
         service.update(restaurant, restaurant.getId());
         verify(repository, times(1)).save(restaurant);
     }
@@ -47,14 +50,19 @@ public class RestaurantServiceTest extends SpringConfigOnTests {
 
     @Test
     public void delete() throws Exception {
-        service.delete(50);
-        verify(repository, times(1)).delete(50);
+        Integer id = BURGER_KING.getId();
+        when(repository.delete(id)).thenReturn(1);
+
+        service.delete(id);
+        verify(repository, times(1)).delete(id);
     }
 
     @Test
     public void getById() throws Exception {
-        service.get(BURGER_KING.getId());
-        verify(repository, times(1)).findById(BURGER_KING.getId());
+        Integer id = BURGER_KING.getId();
+        when(repository.findById(id)).thenReturn(Optional.of(BURGER_KING));
+        service.get(id);
+        verify(repository, times(1)).findById(id);
     }
 
 
