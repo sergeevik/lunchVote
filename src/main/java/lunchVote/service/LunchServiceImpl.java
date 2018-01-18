@@ -15,6 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
+import static lunchVote.util.ValidateUtil.checkEntityNotNull;
+import static lunchVote.util.ValidateUtil.checkIdEquals;
+import static lunchVote.util.ValidateUtil.checkNew;
+
 @Service
 @Transactional(readOnly = true)
 public class LunchServiceImpl implements LunchService{
@@ -39,18 +43,24 @@ public class LunchServiceImpl implements LunchService{
     @Transactional
     @CacheEvict(value = "lunch", allEntries = true)
     public Lunch create(LunchTransfer lunch) {
-        Lunch toSave = getLunch(lunch);
-        return crud.save(toSave);
+        checkNew(lunch);
+        return crud.save(convertToLunch(lunch));
     }
 
     @Override
     @Transactional
     @CacheEvict(value = "lunch", allEntries = true)
     public Lunch update(LunchTransfer lunch, int id) {
-        return crud.save(getLunch(lunch));
+        checkIdEquals(lunch, id);
+
+        Lunch entity = convertToLunch(lunch);
+        Lunch save = crud.save(entity);
+
+        checkEntityNotNull(save, id);
+        return save;
     }
 
-    private Lunch getLunch(LunchTransfer lunch) {
+    private Lunch convertToLunch(LunchTransfer lunch) {
         Restaurant one = restaurantCrud.getOne(lunch.getRestaurantId());
         Lunch toSave = LunchConverter.fromTo(lunch);
         toSave.setRestaurant(one);
@@ -68,6 +78,8 @@ public class LunchServiceImpl implements LunchService{
 
     @Override
     public Lunch get(int id) {
-        return crud.findById(id).orElse(null);
+        Lunch lunch = crud.findById(id).orElse(null);
+        checkEntityNotNull(lunch, id);
+        return lunch;
     }
 }
