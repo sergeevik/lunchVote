@@ -73,18 +73,11 @@ public class LunchServiceTest extends SpringConfigOnTests {
 
     @Test
     public void deleteExist() throws Exception {
-        boolean delete = service.delete(CHIKEN.getId());
+        service.delete(CHIKEN.getId());
         verify(lunchCrud, times(1)).delete(CHIKEN.getId());
-        assertThat(delete).isTrue();
     }
 
-    @Test
-    public void deleteNotExist() throws Exception {
-        int fakeId = -177;
-        boolean delete = service.delete(fakeId);
-        verify(lunchCrud, times(1)).delete(fakeId);
-        assertThat(delete).isFalse();
-    }
+
 
     @Test
     public void getByDay() throws Exception {

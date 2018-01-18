@@ -55,4 +55,10 @@ public class LunchServiceValidation extends SpringConfigOnTests {
         int randomId = 11;
         service.get(randomId);
     }
+
+    @Test(expected = NotFoundEntity.class)
+    public void deleteNotExist(){
+        int randomId = 11;
+        service.delete(randomId);
+    }
 }
