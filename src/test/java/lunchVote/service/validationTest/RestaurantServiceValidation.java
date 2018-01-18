@@ -52,4 +52,10 @@ public class RestaurantServiceValidation extends SpringConfigOnTests {
         service.get(randomId);
     }
 
+    @Test(expected = NotFoundEntity.class)
+    public void deleteNotExist(){
+        int randomId = 11;
+        service.delete(randomId);
+    }
+
 }
