@@ -1,6 +1,7 @@
 package lunchVote.service.cacheTest;
 
 import lunchVote.service.LunchService;
+import lunchVote.transferObjects.LunchTransfer;
 import lunchVote.util.LunchConverter;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,17 +52,38 @@ public class LunchCacheTest extends CacheConfig {
      * Queries:
      * 1 - getAll
      * 2 - get id (PK auto_generate)
-     * 3 - save
+     * 3 - create
      * 4 - getAll
      */
     @Test
-    public void evictSave() throws Exception {
+    public void evictCreate() throws Exception {
         queryCounter.setLimit(4);
-        
+
         LocalDate now = LocalDate.now();
         service.getAllForDate(now);
 
-        service.save(LunchConverter.asTo(SAVE_NEW));
+        service.create(LunchConverter.asTo(SAVE_NEW));
+        for (int i = 0; i < 3; i++) {
+            service.getAllForDate(now);
+        }
+    }
+
+    /**
+     * Queries:
+     * 1 - getAll
+     * 2 - get id (PK auto_generate)
+     * 3 - update
+     * 4 - getAll
+     */
+    @Test
+    public void evictUpdate() throws Exception {
+        queryCounter.setLimit(4);
+
+        LocalDate now = LocalDate.now();
+        service.getAllForDate(now);
+
+        LunchTransfer lunch = LunchConverter.asTo(VOPER);
+        service.update(lunch, lunch.getId());
         for (int i = 0; i < 3; i++) {
             service.getAllForDate(now);
         }

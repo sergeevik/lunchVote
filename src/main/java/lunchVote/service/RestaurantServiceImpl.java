@@ -24,7 +24,14 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     @Transactional
     @CacheEvict(value = "restaurant", allEntries = true)
-    public Restaurant save(Restaurant restaurant) {
+    public Restaurant create(Restaurant restaurant) {
+        return crud.save(restaurant);
+    }
+
+    @Override
+    @Transactional
+    @CacheEvict(value = "restaurant", allEntries = true)
+    public Restaurant update(Restaurant restaurant, int restaurantId) {
         return crud.save(restaurant);
     }
 

@@ -41,7 +41,7 @@ public class LunchServiceTest extends SpringConfigOnTests {
         LunchTransfer lunch = LunchConverter.asTo(SAVE_NEW);
         when(lunchCrud.save(SAVE_NEW)).thenReturn(SAVE_NEW);
 
-        Lunch save = service.save(lunch);
+        Lunch save = service.create(lunch);
 
         verify(restaurantCrud, times(1)).getOne(SAVE_NEW.getRestaurant().getId());
         verify(lunchCrud, times(1)).save(SAVE_NEW);
@@ -71,7 +71,7 @@ public class LunchServiceTest extends SpringConfigOnTests {
         LunchTransfer to = LunchConverter.asTo(lunch);
         when(lunchCrud.save(lunch)).thenReturn(lunch);
 
-        Lunch save = service.save(to);
+        Lunch save = service.update(to, to.getId());
 
         verify(restaurantCrud, times(1)).getOne(lunch.getRestaurant().getId());
         verify(lunchCrud, times(1)).save(lunch);

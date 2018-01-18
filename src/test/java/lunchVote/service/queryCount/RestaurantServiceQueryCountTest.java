@@ -18,7 +18,7 @@ public class RestaurantServiceQueryCountTest extends CacheConfig {
     @Test
     public void create() throws Exception {
         queryCounter.setLimit(2);
-        service.save(new Restaurant(SAVE_NEW));
+        service.create(new Restaurant(SAVE_NEW));
     }
 
     @Test
@@ -26,7 +26,7 @@ public class RestaurantServiceQueryCountTest extends CacheConfig {
         queryCounter.setLimit(1);
         Restaurant restaurant = new Restaurant(MC_DONALD);
         restaurant.setName("Update MCDonald");
-        service.save(restaurant);
+        service.update(restaurant, restaurant.getId());
     }
 
     @Test

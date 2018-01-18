@@ -39,7 +39,7 @@ public class LunchRestTest extends MvcConfig{
     public void create() throws Exception {
 
         LunchTransfer to = LunchConverter.asTo(SAVE_NEW);
-        when(service.save(to)).thenReturn(SAVE_NEW);
+        when(service.create(to)).thenReturn(SAVE_NEW);
 
         mockMvc.perform(post(URL)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -49,7 +49,7 @@ public class LunchRestTest extends MvcConfig{
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(content().json(JsonUtil.writeValue(SAVE_NEW)));
 
-        verify(service, times(1)).save(to);
+        verify(service, times(1)).create(to);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class LunchRestTest extends MvcConfig{
         Lunch lunch = new Lunch(VOPER);
 
         LunchTransfer to = LunchConverter.asTo(lunch);
-        when(service.save(to)).thenReturn(lunch);
+        when(service.update(to, to.getId())).thenReturn(lunch);
 
         mockMvc.perform(put(URL + "/" + lunch.getId())
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -65,7 +65,7 @@ public class LunchRestTest extends MvcConfig{
                 .andDo(print())
                 .andExpect(status().isOk());
 
-        verify(service, times(1)).save(to);
+        verify(service, times(1)).update(to, to.getId());
     }
 
     @Test
