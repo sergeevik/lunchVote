@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDate;
 import java.util.List;
 
+import static lunchVote.testData.LunchData.BIG_MACK;
 import static lunchVote.testData.LunchData.CHIKEN;
 import static lunchVote.testData.UserData.ADMIN;
 import static lunchVote.testData.UserData.JURA;
@@ -95,12 +96,11 @@ public class VoteRepositoryTest extends SQLAnnotation {
     }
 
     @Test
-    @Ignore("need one query")
     public void updateQueryCount() throws Exception {
-        countQueries.setLimit(2);
+        countQueries.setLimit(1);
         Vote vote = new Vote(JURA_VOTE);
         vote.setLunchId(CHIKEN.getId());
-        repository.save(vote);
+        repository.update(vote.getUserId(), vote.getLunchId(), vote.getDate());
     }
 
     @Test
