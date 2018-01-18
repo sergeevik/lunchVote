@@ -57,14 +57,6 @@ public class LunchServiceTest extends SpringConfigOnTests {
     }
 
     @Test
-    public void getByFakeId() throws Exception {
-        int fakeId = 12;
-        Lunch lunch = service.get(fakeId);
-        verify(lunchCrud, times(1)).findById(fakeId);
-        assertThat(lunch).isNull();
-    }
-
-    @Test
     public void update() throws Exception {
         Lunch lunch = new Lunch(VOPER);
         lunch.setPrice(200000);
