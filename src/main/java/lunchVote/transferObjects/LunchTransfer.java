@@ -1,9 +1,11 @@
 package lunchVote.transferObjects;
 
+import lunchVote.model.HasId;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class LunchTransfer {
+public class LunchTransfer implements HasId {
     private Integer id;
     private String description;
     private Double price;
@@ -59,6 +61,11 @@ public class LunchTransfer {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean isNew() {
+        return id==null;
     }
 
     @Override
