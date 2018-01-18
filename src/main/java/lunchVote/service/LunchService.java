@@ -9,7 +9,7 @@ import java.util.List;
 public interface LunchService {
     Lunch create(LunchTransfer lunch);
     Lunch update(LunchTransfer lunch, int lunchId);
-    boolean delete(int id);
+    void delete(int id);
     Lunch get(int id);
     List<Lunch> getAllForDate(LocalDate date);
 }

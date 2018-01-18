@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
+import static lunchVote.util.ValidateUtil.*;
+
 @Service
 @Transactional(readOnly = true)
 public class LunchServiceImpl implements LunchService{
@@ -39,18 +41,24 @@ public class LunchServiceImpl implements LunchService{
     @Transactional
     @CacheEvict(value = "lunch", allEntries = true)
     public Lunch create(LunchTransfer lunch) {
-        Lunch toSave = getLunch(lunch);
-        return crud.save(toSave);
+        checkNew(lunch);
+        return crud.save(convertToLunch(lunch));
     }
 
     @Override
     @Transactional
     @CacheEvict(value = "lunch", allEntries = true)
     public Lunch update(LunchTransfer lunch, int id) {
-        return crud.save(getLunch(lunch));
+        checkIdEquals(lunch, id);
+
+        Lunch entity = convertToLunch(lunch);
+        Lunch save = crud.save(entity);
+
+        checkEntityNotNull(save, id);
+        return save;
     }
 
-    private Lunch getLunch(LunchTransfer lunch) {
+    private Lunch convertToLunch(LunchTransfer lunch) {
         Restaurant one = restaurantCrud.getOne(lunch.getRestaurantId());
         Lunch toSave = LunchConverter.fromTo(lunch);
         toSave.setRestaurant(one);
@@ -62,12 +70,15 @@ public class LunchServiceImpl implements LunchService{
     @Override
     @Transactional
     @CacheEvict(value = "lunch", allEntries = true)
-    public boolean delete(int id) {
-        return crud.delete(id) != 0;
+    public void delete(int id) {
+        boolean delete = crud.delete(id) != 0;
+        checkDeleteSuccess(delete, id);
     }
 
     @Override
     public Lunch get(int id) {
-        return crud.findById(id).orElse(null);
+        Lunch lunch = crud.findById(id).orElse(null);
+        checkEntityNotNull(lunch, id);
+        return lunch;
     }
 }
