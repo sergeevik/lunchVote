@@ -27,6 +27,7 @@ public class VoteServiceTest extends CacheConfig {
         repository = mock(VoteCrud.class);
         service = new VoteServiceImpl(repository, cache);
         cacheVote = cache.getCache("vote");
+        cacheVote.clear();
     }
 
     @Test
