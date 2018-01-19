@@ -27,7 +27,7 @@
 
     <logger name="lunchVote.repository" level="debug"/>
 
-    <root level="INFO">
+    <root level="WARN">
         <appender-ref ref="console"/>
     </root>
 

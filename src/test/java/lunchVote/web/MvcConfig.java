@@ -11,7 +11,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 
 @WebAppConfiguration
-@ContextConfiguration({"classpath:spring/spring-mvc.xml"})
+@ContextConfiguration({"classpath:spring/spring-mvc.xml","classpath:spring/spring-security.xml"})
 public abstract class MvcConfig extends SpringConfigOnTests {
 
     private static final CharacterEncodingFilter CHARACTER_ENCODING_FILTER = new CharacterEncodingFilter();
