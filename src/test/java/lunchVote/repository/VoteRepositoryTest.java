@@ -100,7 +100,7 @@ public class VoteRepositoryTest extends SQLAnnotation {
         countQueries.setLimit(1);
         Vote vote = new Vote(JURA_VOTE);
         vote.setLunchId(CHIKEN.getId());
-        repository.update(vote.getUserId(), vote.getLunchId(), vote.getDate());
+        repository.update(vote.getId(), vote.getLunchId());
     }
 
     @Test
