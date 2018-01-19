@@ -26,7 +26,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     @Transactional
-    @CacheEvict(value = "restaurant", allEntries = true)
+    @CacheEvict(value = {"restaurant", "vote"}, allEntries = true)
     public Restaurant create(Restaurant restaurant) {
         checkNew(restaurant);
         return crud.save(restaurant);
@@ -34,7 +34,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     @Transactional
-    @CacheEvict(value = "restaurant", allEntries = true)
+    @CacheEvict(value = {"restaurant", "vote"}, allEntries = true)
     public Restaurant update(Restaurant restaurant, int restaurantId) {
         checkIdEquals(restaurant, restaurantId);
         Restaurant save = crud.save(restaurant);
@@ -50,7 +50,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     @Transactional
-    @CacheEvict(value = "restaurant", allEntries = true)
+    @CacheEvict(value = {"restaurant", "vote"}, allEntries = true)
     public void delete(int id) {
         boolean delete = crud.delete(id) != 0;
         checkDeleteSuccess(delete, id);

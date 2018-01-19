@@ -39,7 +39,7 @@ public class LunchServiceImpl implements LunchService{
 
     @Override
     @Transactional
-    @CacheEvict(value = "lunch", allEntries = true)
+    @CacheEvict(value = {"lunch", "vote"}, allEntries = true)
     public Lunch create(LunchTransfer lunch) {
         checkNew(lunch);
         return crud.save(convertToLunch(lunch));
@@ -47,7 +47,7 @@ public class LunchServiceImpl implements LunchService{
 
     @Override
     @Transactional
-    @CacheEvict(value = "lunch", allEntries = true)
+    @CacheEvict(value = {"lunch", "vote"}, allEntries = true)
     public Lunch update(LunchTransfer lunch, int id) {
         checkIdEquals(lunch, id);
 
@@ -69,7 +69,7 @@ public class LunchServiceImpl implements LunchService{
 
     @Override
     @Transactional
-    @CacheEvict(value = "lunch", allEntries = true)
+    @CacheEvict(value = {"lunch", "vote"}, allEntries = true)
     public void delete(int id) {
         boolean delete = crud.delete(id) != 0;
         checkDeleteSuccess(delete, id);
