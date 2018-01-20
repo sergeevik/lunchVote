@@ -5,20 +5,16 @@ import lunchVote.transferObjects.LunchTransfer;
 import lunchVote.util.LunchConverter;
 import lunchVote.web.json.JsonUtil;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
 
 import java.time.LocalDate;
 import java.util.List;
 
 import static lunchVote.testData.LunchData.*;
-import static lunchVote.testData.UserData.USER;
 import static lunchVote.testData.UserData.ADMIN;
+import static lunchVote.testData.UserData.USER;
 import static lunchVote.utils.TestDataUtil.toList;
 import static lunchVote.web.LunchRest.URL;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
