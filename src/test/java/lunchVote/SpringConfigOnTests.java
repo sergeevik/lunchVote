@@ -10,7 +10,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(
         {"classpath:spring/spring-test-app.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-@ActiveProfiles(resolver = DbProfileResolver.class)
 public abstract class SpringConfigOnTests {
     @Rule
     public CountInterceptor countQueries = new CountInterceptor();
