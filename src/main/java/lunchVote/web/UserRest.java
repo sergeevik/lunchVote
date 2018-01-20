@@ -8,34 +8,34 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/users")
+//@RestController
+//@RequestMapping("/users")
 public class UserRest {
 
     private final UserService userService;
 
-    @Autowired
+//    @Autowired
     public UserRest(UserService userService) {
         this.userService = userService;
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+//    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public User create(User user){
         return null;
     }
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+//    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(){}
 
-    @DeleteMapping(value = "/{id}")
+//    @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable("id") int id){}
 
-    @GetMapping
+//    @GetMapping
     public List<User> getAll(){
         return null;
     }
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+//    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public User get(@PathVariable("id") int id) {
         return null;
     }
