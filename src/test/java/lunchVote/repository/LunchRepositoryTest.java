@@ -3,6 +3,7 @@ package lunchVote.repository;
 import lunchVote.model.Lunch;
 import lunchVote.model.Restaurant;
 import lunchVote.repository.dataJpa.springCrud.LunchCrud;
+import lunchVote.testData.LunchData;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,6 +20,12 @@ public class LunchRepositoryTest extends SQLAnnotation {
 
     @Autowired
     LunchCrud repository;
+
+    @Test
+    public void saveReturnLunchWithRestaurant() throws Exception {
+        Lunch save = repository.save(new Lunch(LunchData.SAVE_NEW));
+        assertThat(save.getRestaurant()).isNotNull();
+    }
 
     @Test
     public void saveNotReturnNullOnNewLunch() throws Exception {
