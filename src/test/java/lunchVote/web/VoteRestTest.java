@@ -1,15 +1,22 @@
 package lunchVote.web;
 
+import lunchVote.AuthUser;
 import lunchVote.model.Vote;
 import lunchVote.service.VoteService;
+import lunchVote.testData.UserData;
 import lunchVote.testData.VoteData;
 import lunchVote.web.json.JsonUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.TestingAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
+import java.util.Collection;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -36,6 +43,8 @@ public class VoteRestTest extends MvcConfig{
     public void vote() throws Exception {
         Vote save = new Vote(VoteData.USER_VOTE);
         when(service.save(save.getLunchId(), save.getUserId(), save.getDate())).thenReturn(VoteData.USER_VOTE);
+        Authentication old = SecurityContextHolder.getContext().getAuthentication();
+        SecurityContextHolder.getContext().setAuthentication(new TestingAuthenticationToken(new AuthUser(UserData.USER), null));
 
         mockMvc.perform(post(URL + "/" + save.getLunchId()))
                 .andDo(print())
@@ -44,6 +53,7 @@ public class VoteRestTest extends MvcConfig{
                 .andExpect(content().json(JsonUtil.writeValue(VoteData.USER_VOTE)));
 
         verify(service, times(1)).save(save.getLunchId(), save.getUserId(), save.getDate());
+        SecurityContextHolder.getContext().setAuthentication(old);
     }
 
     @Test
