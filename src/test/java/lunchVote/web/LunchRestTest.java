@@ -39,15 +39,12 @@ public class LunchRestTest extends MvcConfig{
     public void create() throws Exception {
 
         LunchTransfer to = LunchConverter.asTo(SAVE_NEW);
-        when(service.create(to)).thenReturn(SAVE_NEW);
 
         mockMvc.perform(post(URL)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(JsonUtil.writeValue(to)))
                 .andDo(print())
-                .andExpect(status().isCreated())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(JsonUtil.writeValue(SAVE_NEW)));
+                .andExpect(status().isCreated());
 
         verify(service, times(1)).create(to);
     }
