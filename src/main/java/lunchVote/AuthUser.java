@@ -18,7 +18,7 @@ public class AuthUser extends org.springframework.security.core.userdetails.User
     }
 
     public static int getId() {
-        return 100002;
+        return get().user.getId();
     }
 
     private static AuthUser safeGet() {
@@ -34,9 +34,5 @@ public class AuthUser extends org.springframework.security.core.userdetails.User
         AuthUser user = safeGet();
         requireNonNull(user, "No authorized user found");
         return user;
-    }
-
-    public static int id() {
-        return get().user.getId();
     }
 }
