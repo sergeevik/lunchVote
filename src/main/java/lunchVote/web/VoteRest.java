@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -28,7 +29,7 @@ public class VoteRest {
     @PostMapping(value = "/{lunchId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Vote vote(@PathVariable int lunchId){
-        return voteService.save(lunchId, AuthUser.getId(), LocalDate.now());
+        return voteService.save(lunchId, AuthUser.getId(), LocalDateTime.now());
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

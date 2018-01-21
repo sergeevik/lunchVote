@@ -16,6 +16,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collection;
 
 import static org.mockito.Mockito.*;
@@ -42,7 +44,8 @@ public class VoteRestTest extends MvcConfig{
     @Test
     public void vote() throws Exception {
         Vote save = new Vote(VoteData.USER_VOTE);
-        when(service.save(save.getLunchId(), save.getUserId(), save.getDate())).thenReturn(VoteData.USER_VOTE);
+        when(service.save(eq(save.getLunchId()), eq(save.getUserId()), any(LocalDateTime.class)))
+                .thenReturn(VoteData.USER_VOTE);
         Authentication old = SecurityContextHolder.getContext().getAuthentication();
         SecurityContextHolder.getContext().setAuthentication(new TestingAuthenticationToken(new AuthUser(UserData.USER), null));
 
@@ -52,7 +55,8 @@ public class VoteRestTest extends MvcConfig{
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(content().json(JsonUtil.writeValue(VoteData.USER_VOTE)));
 
-        verify(service, times(1)).save(save.getLunchId(), save.getUserId(), save.getDate());
+        verify(service, times(1))
+                .save(eq(save.getLunchId()), eq(save.getUserId()), any(LocalDateTime.class));
         SecurityContextHolder.getContext().setAuthentication(old);
     }
 

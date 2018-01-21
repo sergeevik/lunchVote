@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import static lunchVote.testData.LunchData.BIG_MACK;
 import static lunchVote.testData.LunchData.CHIKEN;
@@ -30,9 +32,12 @@ public class VoteServiceQueryCountTest extends CacheConfig {
 
     @Test
     public void save() throws Exception {
-        queryCounter.setLimit(1);
-        Vote save = new Vote(SAVE);
-        service.save(save.getLunchId(), save.getUserId(), save.getDate());
+        queryCounter.setLimit(4);
+        Vote save = new Vote(USER_VOTE);
+        for (int i = 0; i < 3; i++) {
+            service.save(save.getLunchId(), save.getUserId(),
+                    LocalDateTime.of(save.getDate(), LocalTime.of(11, 0)));
+        }
     }
 
     @Test
@@ -43,10 +48,13 @@ public class VoteServiceQueryCountTest extends CacheConfig {
 
     @Test
     public void update() throws Exception {
-        queryCounter.setLimit(1);
-        Vote save = new Vote(ADMIN_VOTE);
+        queryCounter.setLimit(4);
+        Vote save = new Vote(USER_VOTE);
         cache.getCache("vote").put(save.getUserId(), save.getId());
         save.setLunchId(BIG_MACK.getId());
-        service.save(save.getLunchId(), save.getUserId(), save.getDate());
+        for (int i = 0; i < 3; i++) {
+            service.save(save.getLunchId(), save.getUserId(),
+                    LocalDateTime.of(save.getDate(), LocalTime.of(11, 0)));
+        }
     }
 }

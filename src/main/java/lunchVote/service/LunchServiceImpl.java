@@ -76,6 +76,7 @@ public class LunchServiceImpl implements LunchService{
     }
 
     @Override
+    @Cacheable("lunch")
     public Lunch get(int id) {
         Lunch lunch = crud.findById(id).orElse(null);
         checkEntityNotNull(lunch, id);

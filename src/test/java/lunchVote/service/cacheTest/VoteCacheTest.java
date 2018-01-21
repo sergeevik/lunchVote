@@ -14,6 +14,9 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 import static lunchVote.testData.LunchData.SAVE_NEW;
 import static lunchVote.testData.LunchData.VOPER;
 import static lunchVote.testData.RestaurantData.MC_DONALD;
@@ -44,7 +47,7 @@ public class VoteCacheTest extends CacheConfig {
         voteCahce = cache.getCache("vote");
         voteCahce.clear();
         crud = mock(VoteCrud.class);
-        service = new VoteServiceImpl(crud, cache);
+        service = new VoteServiceImpl(crud, lunchService ,cache);
         initMockData();
     }
 
@@ -97,14 +100,16 @@ public class VoteCacheTest extends CacheConfig {
     }
 
     private void saveAfterEvict() {
-        service.save(UPDATE.getLunchId(), UPDATE.getUserId(), UPDATE.getDate());
+        service.save(UPDATE.getLunchId(), UPDATE.getUserId(),
+                LocalDateTime.of(UPDATE.getDate(), LocalTime.of(11, 0)));
         verify(crud, times(1)).save(SAVE);
         verify(crud, times(1)).update(UPDATE.getId(), UPDATE.getLunchId());
     }
 
     private void updateBeforeEvict() {
         putVoteInCache(UPDATE);
-        service.save(UPDATE.getLunchId(), UPDATE.getUserId(), UPDATE.getDate());
+        service.save(UPDATE.getLunchId(), UPDATE.getUserId(),
+                LocalDateTime.of(UPDATE.getDate(), LocalTime.of(11, 0)));
         verify(crud, times(1)).update(UPDATE.getId(), UPDATE.getLunchId());
     }
 
