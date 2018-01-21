@@ -1,3 +1,5 @@
+https://travis-ci.org/vampirit/lunchVote.svg?branch=master
+
 # LanchVote
 
 #### Рестораны: 
