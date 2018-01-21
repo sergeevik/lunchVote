@@ -15,7 +15,7 @@ import org.junit.Test;
 
 import static org.mockito.Mockito.mock;
 
-public class LunchServiceValidation extends SpringConfigOnTests {
+public class LunchServiceValidationTest extends SpringConfigOnTests {
 
     private LunchService service;
     private LunchCrud lunchCrud;

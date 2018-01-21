@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class VoteRestSecurity extends SecurityConfig {
+public class VoteRestSecurityTest extends SecurityConfig {
 
     private MockMvc mockMvc;
 

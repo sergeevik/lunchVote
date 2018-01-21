@@ -13,7 +13,7 @@ import org.junit.Test;
 import static lunchVote.testData.RestaurantData.*;
 import static org.mockito.Mockito.mock;
 
-public class RestaurantServiceValidation extends SpringConfigOnTests {
+public class RestaurantServiceValidationTest extends SpringConfigOnTests {
 
     private RestaurantService service;
     private RestaurantCrud repository;
