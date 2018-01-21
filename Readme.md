@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/vampirit/lunchVote.svg?branch=master)](https://travis-ci.org/vampirit/lunchVote)
+[![codecov](https://codecov.io/gh/vampirit/lunchVote/branch/master/graph/badge.svg)](https://codecov.io/gh/vampirit/lunchVote)
 
 # LanchVote
 
