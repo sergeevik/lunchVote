@@ -24,6 +24,6 @@ public class UUIDFilter implements Filter {
 
     @Override
     public void destroy() {
-        LOGGER.debug("Servlet init");
+        LOGGER.debug("Servlet destroy");
     }
 }
