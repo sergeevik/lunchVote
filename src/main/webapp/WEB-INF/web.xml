@@ -42,6 +42,15 @@
     </filter-mapping>
 
     <filter>
+        <filter-name>UuidFilter</filter-name>
+        <filter-class>lunchVote.web.UUIDFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>UuidFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
         <filter-name>encodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
         <init-param>
