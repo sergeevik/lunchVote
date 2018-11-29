@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class UUIDFilter implements Filter {
+    private static final String UUID_KEY = "uuid";
     private Logger LOGGER = LoggerFactory.getLogger(UUIDFilter.class);
 
     @Override
@@ -18,8 +19,12 @@ public class UUIDFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        MDC.put("myUuid", UUID.randomUUID().toString());
-        filterChain.doFilter(servletRequest, servletResponse);
+        try {
+            MDC.put(UUID_KEY, UUID.randomUUID().toString());
+            filterChain.doFilter(servletRequest, servletResponse);
+        }finally {
+            MDC.remove(UUID_KEY);
+        }
     }
 
     @Override
