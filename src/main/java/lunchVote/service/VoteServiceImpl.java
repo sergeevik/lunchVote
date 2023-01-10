@@ -21,7 +21,7 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 public class VoteServiceImpl implements VoteService {
-    private static final LocalTime endVote = LocalTime.of(12, 0);
+    private static final LocalTime endVote = LocalTime.of(11, 00);
     private final VoteCrud crud;
     private final LunchService lunchService;
 
